@@ -1,7 +1,7 @@
 # sgra-simulator
 
 
-Sagittarius A* — S-Star Cluster Simulator
+Sagittarius A* — S-Star Cluster Simulator.
 An interactive N-body simulation of the S-star cluster orbiting Sagittarius A*,
 the supermassive black hole at the centre of the Milky Way. Runs entirely in
 the browser, with an optional local GPU microservice for high-precision,
