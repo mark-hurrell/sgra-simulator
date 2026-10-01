@@ -1,0 +1,105 @@
+{
+  "schema": "sgra-v1-release-strip-manifest-v1",
+  "purpose": "Explicit Workbench-to-Release classification; never modify Workbench in place.",
+  "unlistedLoadedScripts": "RELEASE_REQUIRED",
+  "classifications": {
+    "RELEASE_REQUIRED": [
+      "LICENSE",
+      "sgra_sim.html",
+      "styles/sgra.css",
+      "README.md",
+      "QUICK_START.md",
+      "Building_SGRA.pdf",
+      "NUMERICAL_EVIDENCE_FINAL.pdf",
+      "When_Green_Tests_Aren_t_Enough.pdf",
+      "docs/ACCESSIBILITY_STATEMENT.md",
+      "docs/DESIGN_IN_HINDSIGHT_V1.md",
+      "docs/INDEX.md",
+      "docs/ACCESSIBILITY_GATE_RECORD_2026-09-11.md",
+      "docs/papers/Building_SGRA_source.md",
+      "docs/papers/Building_SGRA.pdf",
+      "docs/papers/NUMERICAL_EVIDENCE_FINAL.md",
+      "docs/papers/When_Green_Tests_Arent_Enough.md",
+      "docs/papers/When Green Tests Aren't Enough.pdf",
+      "release/V1_RELEASE_STRIP_MANIFEST.json"
+    ],
+    "WORKBENCH_ONLY_B0": [
+      "src/diag/perf_baseline.js",
+      "src/diag/b0_derived_fixture_registry.js",
+      "bench/fixtures/generated/b0_imBH3_prograde.js",
+      "bench/fixtures/generated/b0_imBH4_polar.js",
+      "bench/fixtures/generated/b0_imBH5_retrograde.js",
+      "bench/fixtures/generated/b0_imBH5_newtonian_control.js",
+      "bench/fixtures/generated/b0_imBH4_derived_close.js",
+      "bench/fixtures/generated/b0_imBH1_derived_close.js"
+    ],
+    "WORKBENCH_ONLY_DIAGNOSTIC": [
+      "src/diag/diag_harness.js",
+      "src/data/sci02_reference_table.js",
+      "src/diag/sci02_canonical_time.js",
+      "src/diag/sci02_vphat_authority.js",
+      "src/diag/sci02_observation_builder.js",
+      "src/diag/sci02_frozen_estimator.js",
+      "src/diag/sci02_qualified_reference_diagnostic.js",
+      "src/diag/sci02_shadow_estimator.js",
+      "src/diag/sci02_live_runtime.js",
+      "src/diag/option_b_evaluator.js",
+      "src/diag/measurement_integrity.js",
+      "src/diag/scientific_trace.js",
+      "src/diag/r6_allocation_probe.js",
+      "src/diag/render_attribution.js",
+      "src/diag/kerr_mutual_trace.js",
+      "src/diag/kerr_ownership_telemetry.js",
+      "src/diag/accepted_state_capture.js",
+      "src/diag/duty_measurement.js",
+      "src/diag/pericentre_candidate.js",
+      "src/physics/kerr_tr_period.js"
+    ],
+    "EVIDENCE_ONLY": [
+      "evidence/publication/"
+    ],
+    "TEST_ONLY": [
+      "tests/",
+      "bench/"
+    ],
+    "UNCERTAIN": []
+  },
+  "stripRules": {
+    "htmlScriptSources": [
+      "./src/diag/diag_harness.js",
+      "./src/diag/perf_baseline.js?v=20260815-r6",
+      "./src/diag/b0_derived_fixture_registry.js",
+      "./bench/fixtures/generated/b0_imBH3_prograde.js",
+      "./bench/fixtures/generated/b0_imBH4_polar.js",
+      "./bench/fixtures/generated/b0_imBH5_retrograde.js",
+      "./bench/fixtures/generated/b0_imBH5_newtonian_control.js",
+      "./bench/fixtures/generated/b0_imBH4_derived_close.js",
+      "./bench/fixtures/generated/b0_imBH1_derived_close.js",
+      "./src/data/sci02_reference_table.js",
+      "./src/diag/sci02_canonical_time.js",
+      "./src/diag/sci02_vphat_authority.js",
+      "./src/diag/sci02_observation_builder.js",
+      "./src/diag/sci02_frozen_estimator.js",
+      "./src/diag/sci02_qualified_reference_diagnostic.js",
+      "./src/diag/sci02_shadow_estimator.js",
+      "./src/diag/sci02_live_runtime.js",
+      "./src/diag/option_b_evaluator.js",
+      "./src/diag/measurement_integrity.js",
+      "./src/diag/scientific_trace.js",
+      "./src/diag/r6_allocation_probe.js",
+      "./src/diag/render_attribution.js",
+      "./src/diag/kerr_mutual_trace.js",
+      "./src/diag/kerr_ownership_telemetry.js",
+      "./src/diag/accepted_state_capture.js",
+      "./src/diag/duty_measurement.js",
+      "./src/diag/pericentre_candidate.js",
+      "./src/physics/kerr_tr_period.js"
+    ],
+    "runtimeMarker": "WORKBENCH_B0_RUNTIME_STRIPPED",
+    "diagHarnessConfigureMarker": "WORKBENCH_DIAG_HARNESS_CONFIGURE_STRIPPED",
+    "sci02RuntimeMarker": "WORKBENCH_SCI02_RUNTIME_STRIPPED",
+    "publicScenarioFiles": [
+      "evidence/publication/scenarios/b0-imBH3-prograde.json"
+    ]
+  }
+}

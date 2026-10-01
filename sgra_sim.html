@@ -1,0 +1,2185 @@
+<!DOCTYPE html>
+<!--
+Sgr A* Simulator
+Copyright (c) 2026 Mark Hurrell
+Licensed under the Sgr A* Non-Commercial Source Licence v1.0.
+See LICENSE in the repository root for the complete terms.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SGR A* — S-Star Cluster</title>
+<link rel="stylesheet" href="./styles/sgra.css?v=20260815-r6">
+</head>
+<body>
+<header class="hud" id="top" aria-labelledby="pageTitle">
+  <div class="wordmark">
+    <h1 id="pageTitle">SGR&nbsp;A<b>*</b></h1>
+    <p id="pageDescription" class="sr-only">Interactive simulation of the Sgr A* central system and its catalogue or controlled Sandbox experiment.</p>
+    <div class="sub" id="wordmarkSub">s-star cluster · 4.30×10⁶ M☉ · Gillessen+2017 · <span id="forceModelSummaryLabel"></span></div>
+  </div>
+  <nav id="surfaceRoutes" aria-label="Inspect surfaces"><button class="ctl" id="bObjects" type="button" aria-expanded="false" aria-controls="objectListPanel">Objects <span class="surface-disclosure" data-surface-disclosure aria-hidden="true">▾</span></button></nav>
+  <div id="readout">
+    <div>epoch <span class="v" id="rT">2026.44</span></div>
+    <div title="Relative specific-energy drift diagnostic">ΔE <span class="v" id="rE" aria-label="Relative specific-energy drift diagnostic">—</span>%<span id="rThr" class="warn"></span></div>
+    <div><span class="v" id="rN">18</span> bodies · <span class="v" id="rGR">Requested: Newtonian; active treatment in selected-body ownership</span></div>
+    <div>M<sub>BH</sub> <span class="v" id="rBH">4.300M</span> <span class="warn" id="rCap"></span></div>
+  </div>
+</header>
+
+<main id="mainContent" aria-labelledby="simulationHeading">
+<section id="sceneSummaryRegion" aria-labelledby="sceneSummaryHeading" class="sr-only">
+  <h2 id="sceneSummaryHeading">Scene summary</h2>
+  <p id="sceneSummaryText">Scene summary unavailable until the simulation initializes.</p>
+</section>
+<section id="simulationRegion" aria-labelledby="simulationHeading">
+  <h2 id="simulationHeading" class="sr-only">Simulation</h2>
+  <section id="bodiesRegion" aria-label="Objects and follow groups">
+    <h3 id="bodiesHeading" class="sr-only">Bodies</h3>
+    <section id="objectListPanel" class="pdom-surface pdom-collapsed" aria-label="Object list">
+  <div class="object-list-head"><h3 id="objectListHeading" tabindex="-1">Bodies</h3><button class="ctl" id="bSceneSummary" type="button">scene summary</button></div>
+  <table id="objectList"><caption class="sr-only">Simulation objects</caption><thead><tr><th scope="col">Name / ID</th><th scope="col">Role</th><th scope="col">State</th><th scope="col">Distance</th><th scope="col">Speed</th><th scope="col">Regime</th></tr></thead><tbody></tbody></table>
+  <details id="followGroupDisclosure"><summary>Follow group</summary><p id="followGroupSummary">Follow group: 0 explicit intruders; camera follows the group encounter while keeping Sgr A* in view.</p><div id="followGroupMembers"></div><button class="ctl" id="bFollowGroup" type="button" disabled>Follow group</button><button class="ctl" id="bStopGroupFollow" type="button" disabled>Stop group follow</button><button class="ctl" id="bGroupStatus" type="button" disabled>Group status</button></details>
+</section>
+  </section>
+  <section id="selectedBodyRegion" aria-labelledby="selectedBodyHeading">
+    <h3 id="selectedBodyHeading" class="sr-only">Selected body</h3>
+    <div id="card" class="hud pdom-collapsed">
+  <h4><span id="cN">—</span><button id="cX" aria-label="Close selected-body inspector">×</button></h4>
+  <p id="cRoleState" class="inspector-role-state">No body selected</p>
+  <dl>
+    <dt id="cRLabel" title="Current radius relative to the live Sgr A* state">r (current)</dt><dd id="cR" aria-label="Current radius unavailable">—</dd>
+    <dt id="cVLabel" title="Current relative speed in the live Sgr A* frame">v (current)</dt><dd id="cV" aria-label="Current speed unavailable">—</dd>
+    <dt id="cVCLabel" title="Current speed as a fraction of c">v/c (current)</dt><dd id="cVC" aria-label="Current speed over c unavailable">—</dd>
+    <dt id="cRpLabel" title="Osculating periapsis from the current osculating two-body solution">rₚ (osc)</dt><dd id="cRp" aria-label="Osculating periapsis unavailable">—</dd>
+    <dt id="cPNLabel" title="Current 1PN-to-Newtonian strength estimate">1PN/N (current)</dt><dd id="cPN" aria-label="Current 1PN-to-Newtonian ratio unavailable">—</dd>
+    <dt id="cALabel" title="Osculating semi-major axis from the current osculating two-body solution">a (osc)</dt><dd id="cA" aria-label="Osculating semi-major axis unavailable">—</dd>
+    <dt id="cELabel" title="Osculating eccentricity from the current osculating two-body solution">e (osc)</dt><dd id="cE" aria-label="Osculating eccentricity unavailable">—</dd>
+    <dt id="cPLabel" title="Osculating period from the current osculating two-body solution">T (osc)</dt><dd id="cP" aria-label="Osculating period unavailable">—</dd>
+    <dt id="cMLabel" title="Current selected-body mass">mass</dt><dd id="cM" aria-label="Selected-body mass unavailable">—</dd>
+  </dl>
+  <button class="ctl danger-action" id="bRemoveSelectedIntruder" type="button" hidden>Remove selected intruder</button>
+  <div id="rBar">
+    <div id="rName" style="color:#6080ff">Newtonian</div>
+    <div id="rTrack"><div id="rDot"></div></div>
+    <div class="rlabels"><span>Newton</span><span>1PN</span><span>strong</span></div>
+  </div>
+  <details id="cardRuntimeDetails"><summary>Fidelity and runtime details</summary><dl class="inspector-runtime"><dt>Requested mode</dt><dd id="cardRuntimeRequested">not reported by current runtime</dd><dt>Active treatment</dt><dd id="cardRuntimeActive">not reported by current runtime</dd><dt>Availability / eligibility</dt><dd id="cardRuntimeAvailability">not reported by current runtime</dd><dt>Fallback / reason</dt><dd id="cardRuntimeFallback">not reported by current runtime</dd><dt>Ownership</dt><dd id="cardRuntimeOwnership">not reported by current runtime</dd></dl><p class="runtime-limitation">Reflects currently exposed diagnostic state only; no proper-time, observer-effect, capture-certainty, or unavailable-cause claim is made.</p></details>
+</div>
+  </section>
+</section>
+<dialog id="intruderFormPanel" role="dialog" aria-modal="true" aria-labelledby="intruderFormHeading">
+  <h2 id="intruderFormHeading">Configure intruder</h2>
+  <p id="intruderFormFrameStatement">All positions are in astronomical units relative to Sagittarius A star.</p>
+  <p id="intruderFormHelp">The intruder is created at the initial position. Its initial velocity is calculated from the velocity reference point toward the initial position, so it initially travels away from the reference point.</p>
+  <p id="intruderPresetClarification">These are illustrative starting configurations. What follows depends on the whole system and is not predicted here.</p>
+  <form id="intruderForm" novalidate>
+    <label for="intruderPresetSelect">Illustrative starting configuration</label><select id="intruderPresetSelect" aria-describedby="intruderPresetClarification"><option value="">Custom values</option></select>
+    <label for="intruderMassInput">Mass (solar masses) <span id="intruderMassError" class="field-error"></span></label><input id="intruderMassInput" name="mass" type="number" inputmode="decimal" min="0.001" max="100000" step="any" value="1000" required aria-label="Mass, solar masses" aria-describedby="intruderMassError">
+    <fieldset><legend>Velocity reference point (p0)</legend><p id="intruderP0Help" class="field-help">Velocity reference point (p0) coordinates relative to Sagittarius A star, in astronomical units.</p><label for="launchP0X">X <span id="launchP0XError" class="field-error"></span></label><input id="launchP0X" type="number" inputmode="decimal" step="any" value="0" required aria-label="Velocity reference point (p0) X, astronomical units" aria-describedby="intruderP0Help launchP0XError"><label for="launchP0Y">Y <span id="launchP0YError" class="field-error"></span></label><input id="launchP0Y" type="number" inputmode="decimal" step="any" value="0" required aria-label="Velocity reference point (p0) Y, astronomical units" aria-describedby="intruderP0Help launchP0YError"><label for="launchP0Z">Z <span id="launchP0ZError" class="field-error"></span></label><input id="launchP0Z" type="number" inputmode="decimal" step="any" value="0" required aria-label="Velocity reference point (p0) Z, astronomical units" aria-describedby="intruderP0Help launchP0ZError"></fieldset>
+    <fieldset><legend>Initial position (p1)</legend><p id="intruderP1Help" class="field-help">Initial position (p1) relative to Sagittarius A star, in astronomical units.</p><label for="launchP1X">X <span id="launchP1XError" class="field-error"></span></label><input id="launchP1X" type="number" inputmode="decimal" step="any" value="1000" required aria-label="Initial position (p1) X, astronomical units" aria-describedby="intruderP1Help launchP1XError"><label for="launchP1Y">Y <span id="launchP1YError" class="field-error"></span></label><input id="launchP1Y" type="number" inputmode="decimal" step="any" value="0" required aria-label="Initial position (p1) Y, astronomical units" aria-describedby="intruderP1Help launchP1YError"><label for="launchP1Z">Z <span id="launchP1ZError" class="field-error"></span></label><input id="launchP1Z" type="number" inputmode="decimal" step="any" value="0" required aria-label="Initial position (p1) Z, astronomical units" aria-describedby="intruderP1Help launchP1ZError"></fieldset>
+    <p id="intruderLaunchSummary" aria-describedby="intruderFormSummaryRule"></p><p id="intruderLaunchVector" class="field-help" aria-label="Precision initial velocity vector"></p><p id="intruderFormSummaryRule" class="field-help">Fraction of c is speed in AU/yr divided by c = 63241.077 AU/yr.</p>
+    <p id="intruderFormError"></p><button class="ctl primary" id="bLaunchConfigured" type="submit">Launch intruder</button><button class="ctl" id="bCancelIntruderForm" type="button">Cancel</button>
+  </form>
+</dialog>
+<section id="runtimeTruthPanel" aria-labelledby="runtimeTruthHeading" hidden>
+  <h2 id="runtimeTruthHeading" tabindex="-1">Runtime truth</h2>
+  <dl><dt>Requested mode</dt><dd id="runtimeRequested">not reported by current runtime</dd><dt>Active treatment</dt><dd id="runtimeActive">not reported by current runtime</dd><dt>Availability / eligibility</dt><dd id="runtimeAvailability">not reported by current runtime</dd><dt>Fallback / reason</dt><dd id="runtimeFallback">not reported by current runtime</dd><dt>Selected-body ownership</dt><dd id="runtimeOwnership">not reported by current runtime</dd></dl>
+  <p class="runtime-limitation">Reflects currently exposed diagnostic state only; no proper-time, observer-effect, capture-certainty, or unavailable-cause claim is made.</p>
+</section>
+<canvas id="cv" tabindex="0" aria-label="SGRA simulation view. Use arrow keys to rotate the view when this simulation view has focus. Press the keyboard help command for available shortcuts." aria-describedby="canvasFallback">SGRA simulation scene. Use the existing structured Bodies list and Selected body information to inspect bodies without the canvas.</canvas>
+
+<div class="hud mode-shell" id="modeShell" aria-label="Application mode">
+  <div><strong id="modeLabel">Explore</strong><span id="modeNotice" hidden>Sandbox experiment — not an observed S-star cluster model</span></div>
+  <div class="mode-actions"><button class="ctl" id="bEnterSandbox" type="button">Enter Sandbox</button><button class="ctl" id="bReturnExplore" type="button" hidden>Return to Explore</button></div>
+</div>
+
+<div class="hud" id="legend">
+  <div class="leg">
+    <div class="ltitle">Legend</div>
+    <div class="lrow"><span class="dot" style="background:#ffb27a"></span>Sgr A* (mass grows on accretion)</div>
+    <div class="lrow"><span class="dot" style="background:#bcd2ff"></span>S-star (Gillessen 2017)</div>
+    <div class="lrow"><span class="dot" style="background:#8899bb"></span>Background field star</div>
+    <div class="lrow"><span class="dot" style="background:#ff7a5c"></span>IMBH intruder (tap to follow)</div>
+    <div class="lrow"><span class="dot" style="background:#bcd2ff;box-shadow:0 0 4px #bcd2ff"></span>Stellar intruder ★ (colour = speed)</div>
+    <div class="lrow"><span class="sw" style="background:rgba(110,150,190,.5)"></span>Keplerian osculating ellipse</div>
+    <div class="lrow"><span class="sw" style="border-top:2px dashed #ffa03c"></span>True N-body future path</div>
+    <div class="lrow" style="flex-direction:column;align-items:flex-start;gap:3px">
+      <span>Star colour = relativistic regime (gravitational depth + v²/c²)</span>
+      <div class="strip"></div>
+      <div class="sl2"><span>Newtonian</span><span>v/c 1%</span><span>v/c 5%</span><span>strong</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="hud" id="scalebar"><span class="rule"></span><span id="scTxt">—</span></div>
+
+<!-- ──────────────────── BAR (desktop + mobile) ──────────────────── -->
+<section id="controlsRegion" aria-labelledby="desktopControlsHeading">
+<h2 id="desktopControlsHeading" class="sr-only">Desktop controls</h2>
+<div id="bar">
+  <div id="barPrimary">
+    <h3 class="sr-only">Playback</h3>
+    <div class="grp">
+      <button class="ctl icon" id="bPlay" title="Pause simulation (Space)" aria-label="Pause simulation" aria-pressed="true">⏸</button>
+      <label class="sr-only" for="sPreset">Simulation speed preset</label><select class="ctl" id="sPreset" aria-label="Simulation speed preset" title="Speed preset">
+        <option value="custom" disabled>Custom</option>
+        <option value="-1.3">0.05 yr/s</option>
+        <option value="-0.7">0.2 yr/s</option>
+        <option value="0" selected>1 yr/s</option>
+        <option value="0.7">5 yr/s</option>
+        <option value="1">10 yr/s</option>
+        <option value="1.3">20 yr/s</option>
+        <option value="1.7">50 yr/s</option>
+      </select>
+      <label class="sl" for="sSpeed">Simulation speed <input type="range" id="sSpeed" min="-1.3" max="1.7" step="0.01" value="0">
+        <output id="oSpeed">1.0 yr/s</output></label>
+    </div>
+    <div class="vr"></div>
+    <label class="sr-only" for="starSel">Follow object</label><select id="starSel" aria-label="Follow object" title="Follow a named star"></select>
+    <div class="vr"></div>
+    <details class="desktop-drawer" id="viewDrawer">
+      <summary>View</summary>
+      <div class="drawer-content">
+        <h3 class="sr-only">Camera</h3>
+        <button class="ctl" id="bPlane" title="Move to top-down orbit plane view for followed body">orbit plane</button>
+        <button class="ctl" id="bHome" title="Recenter on Sgr A* (H)">home</button>
+        <button class="ctl" id="bEarthView" title="Earth-observer view">earth view</button>
+        <span id="viewModeBadge" class="view-mode-badge">Start 3D inspection</span>
+      </div>
+    </details>
+    <button class="ctl reset-control" id="bReset" title="Reset to epoch 2026.44 (R)">reset</button>
+  </div>
+
+  <div id="barDrawer">
+    <details class="desktop-drawer" id="displayDrawer">
+      <summary>Display</summary>
+      <div class="drawer-content">
+        <button class="ctl on" id="bOrbits" aria-pressed="true" title="Osculating ellipses (O)">orbits</button><button class="ctl on" id="bTrails" aria-pressed="true" title="Trail history (T)">trails</button><button class="ctl on" id="bLabels" aria-pressed="true" title="Star labels (L)">labels</button><button class="ctl" id="bGlow" aria-pressed="false" title="Relativistic regime glow">zones</button><button class="ctl on" id="bScientificAnnotations" aria-pressed="true" title="R_s, ISCO, capture radius and PN validity rings">scientific rings</button><button class="ctl on" id="bDisc" aria-pressed="true" title="Stylised accretion disc">disc</button><button class="ctl" id="bSpinMesh" aria-pressed="false" title="Prototype frame-dragging mesh">spin mesh</button>
+        <label id="exploreFieldDensityControl" for="sQual">Star field density</label><select class="ctl" id="sQual" title="Adds heuristically generated background stars around the catalogued central stars."><option value="0" selected>Off — catalogue only</option><option value="1">Low</option><option value="2">Medium</option><option value="3">High</option></select><button class="ctl" id="bLeg" aria-pressed="false" title="Legend">legend</button>
+      </div>
+    </details>
+    <details class="desktop-drawer" id="experimentDrawer">
+      <summary>Experiment</summary>
+      <div class="drawer-content">
+        <label for="sFidelity">Physics fidelity</label><select class="ctl" id="sFidelity" title="Physics fidelity"><option value="newtonian">Newtonian</option><option value="1pn">1PN</option><option value="adaptive_kerr">Adaptive Kerr</option></select><span class="mini" id="oFidelityStatus">Newtonian</span>
+        <button class="ctl" id="bCusp" aria-pressed="false" title="Dark stellar cusp — a roughly spherical concentration of faint stellar remnants around Sgr A*; unlike the accretion flow, it is made of orbiting stars and remnants, not hot gas.">dark cusp</button><h3 class="sr-only">Intruder</h3><button class="ctl" id="bConfigureIntruder" type="button">Configure intruder</button><button class="ctl primary" id="bLaunch" title="Drag to launch an intruder" aria-pressed="false">Launch intruder</button><label for="sSpinAStar" class="sl">Sgr A* spin <input type="range" id="sSpinAStar" min="0" max="0.9999" step="0.0001" value="0"><output id="oSpinAStar">a*=0.0000</output></label>
+        <div class="chips" id="chips"><button class="ctl" data-m="20" aria-pressed="false">★ 20 M☉</button><button class="ctl on" data-m="1e3" aria-pressed="true">10³ M☉</button><button class="ctl" data-m="1e4" aria-pressed="false">10⁴ M☉</button><button class="ctl" data-m="1e5" aria-pressed="false">10⁵ M☉</button></div>
+      </div>
+    </details>
+    <details class="desktop-drawer" id="sessionDrawer">
+      <summary>Session / numerics</summary>
+      <div class="drawer-content session-drawer-content">
+        <label for="sIntegratorMode">Integrator request</label><select class="ctl" id="sIntegratorMode" title="Integrator mode"><option value="plain">Fast - reduced precision</option><option value="yoshida4_trial">High precision - slower</option></select><span class="mini" id="oIntegratorMode">active: fast</span>
+      </div>
+    </details>
+    <details class="desktop-drawer" id="scenariosDrawer">
+      <summary>Scenarios</summary>
+      <div class="drawer-content scenario-controls">
+        <h3 class="sr-only">Scenarios</h3>
+        <label for="sScenario">Scenario</label><select class="ctl" id="sScenario"></select>
+        <p class="scenario-description" id="scenarioDescription">Curated initial-condition scenarios.</p>
+        <label class="sr-only" for="scenarioCatalogueFile">Load scenario catalogue JSON</label><input id="scenarioCatalogueFile" type="file" accept=".json,application/json">
+        <button class="ctl primary" id="bApplyScenario" type="button">Apply scenario</button>
+      </div>
+    </details>
+    <details class="desktop-drawer" id="accessibilityDrawer">
+      <summary>Accessibility &amp; diagnostics</summary>
+      <div class="drawer-content">
+        <button class="ctl" id="bCalmMotion" type="button" aria-pressed="false">calm motion: off</button>
+        <button class="ctl" id="bSonification" type="button" aria-pressed="false">sonification: off</button>
+        <label for="sSonificationGain" class="sl" id="sonificationGainControl"><span class="sr-only">Sonification volume</span>volume <input type="range" id="sSonificationGain" min="0" max="1" step="0.05" value="0.6"><output id="oSonificationGain">60%</output></label>
+        <label for="sPitchRange" class="sl">Pitch range <select class="ctl" id="sPitchRange"><option value="low">Low (110-330 Hz)</option><option value="standard" selected>Standard (220-660 Hz)</option><option value="high">High (330-990 Hz)</option></select></label><label for="sSpeechRate" class="sl">Speech rate <select class="ctl" id="sSpeechRate"><option value="0.75">0.75×</option><option value="1" selected>1×</option><option value="1.5">1.5×</option><option value="2">2×</option><option value="2.5">2.5×</option><option value="3">3×</option></select></label>
+        <button class="ctl" id="bContinuousChannels" type="button" aria-pressed="false" title="A continuous tone and inward-motion pulse for the followed body. Requires one explicitly followed body; unavailable during group follow. Has no effect while sonification is off">continuous sound: off</button>
+        <button class="ctl" id="bContinuousPauseResume" type="button" aria-pressed="false" disabled title="Pause or resume continuous sound without turning it off">pause continuous sound</button>
+        <button class="ctl" id="bSonificationLegend" type="button" title="Speak a short legend describing the active sonification channels, pitch convention, and pitch range; has no effect while sonification is off">Replay sound legend</button>
+        <button class="ctl" id="bSonificationSpeakEvents" type="button" aria-pressed="false" title="Speaks model events (pericentre, capture, ejection). Requires sonification on.">Speak page event messages</button>
+        <button class="ctl" id="bRuntimeStatus" type="button" aria-expanded="false" aria-controls="runtimeTruthPanel">Runtime status</button>
+        <button class="ctl" id="bFreeView" type="button">Free view</button>
+        <details id="keyboardShortcuts">
+          <summary>Keyboard shortcuts</summary>
+          <p>When the simulation view has focus: Arrow keys rotate the camera; + or - zooms; H returns to Home; E selects Earth view; O aligns the orbit plane; Space plays or pauses; R resets; F follows; T toggles trails; L toggles labels; C toggles the cusp; [ and ] adjust speed; ? opens this help.</p>
+          <p>During Group Follow, the camera follows the encounter; arrows or drag adjust the chase view and +/− or scroll adjusts zoom.</p>
+          <p>Placement mode uses a drag to aim and launch. Press Escape to exit placement.</p>
+        </details>
+        <details id="recentEventsDisclosure">
+          <summary>Recent events</summary>
+          <p id="recentEventsHelp">Factual announced actions and model events from this session. Opening this list does not replay announcements.</p>
+          <ol id="recentEventsList" aria-describedby="recentEventsHelp"></ol>
+        </details>
+      </div>
+    </details>
+  </div>
+
+  <div id="barScroll"></div>
+  <button class="ctl icon" id="bPlayM" title="Pause simulation (Space)" aria-label="Pause simulation" aria-pressed="true">⏸</button><button class="ctl primary" id="bPanel" aria-expanded="false" aria-controls="mobilePanel">controls</button>
+</div>
+
+<div id="scrim"></div>
+<section id="mobilePanel" aria-label="Mobile controls" aria-labelledby="mobilePanelHeading">
+  <div id="mobilePanelHead">
+    <h2 id="mobilePanelHeading" tabindex="-1">Controls</h2>
+    <button class="ctl icon" id="panelClose" aria-label="Close controls">✕</button>
+  </div>
+  <div id="mobilePanelBody">
+    <details class="mobile-section" id="mobileActionsSection">
+      <summary>Actions</summary>
+      <div class="pgroup">
+        <h3 class="sr-only">Playback</h3>
+        <span class="sec">Speed</span>
+      <div class="prow">
+        <label class="sr-only" for="sPresetM">Simulation speed preset</label><select class="ctl" id="sPresetM" aria-label="Simulation speed preset"><option value="custom" disabled>Custom</option><option value="-1.3">0.05 yr/s</option><option value="-0.7">0.2 yr/s</option><option value="0" selected>1 yr/s</option><option value="0.7">5 yr/s</option><option value="1">10 yr/s</option><option value="1.3">20 yr/s</option><option value="1.7">50 yr/s</select><label class="sr-only" for="starSelM">Follow object</label><select id="starSelM" aria-label="Follow object"></select>
+        <label class="sl" for="sSpeedM" style="flex:1">Simulation speed
+          <input type="range" id="sSpeedM" min="-1.3" max="1.7" step="0.01" value="0">
+          <output id="oSpeedM">1.0 yr/s</output>
+        </label>
+      </div>
+      <div class="prow"><button class="ctl reset-control" id="bResetM">reset</button><button class="ctl" id="bFreeViewM" type="button">free view</button></div>
+      <div class="prow mode-actions"><button class="ctl" id="bEnterSandboxM" type="button">Enter Sandbox</button><button class="ctl" id="bReturnExploreM" type="button" hidden>Return to Explore</button></div>
+      </div>
+    </details>
+    <details class="mobile-section" id="mobileInspectSection">
+      <summary>Inspect</summary>
+      <div class="pgroup"><p id="mobileInspectorEmpty">Select a body to inspect its current values, ownership, and fidelity details.</p></div>
+    </details>
+    <details class="mobile-section" id="mobileDisplaySection">
+      <summary>View &amp; display</summary>
+      <div class="pgroup">
+      <h3 class="sr-only">Camera</h3>
+      <span class="sec">Display</span>
+      <div class="prow">
+        <button class="ctl" id="bPlaneM">orbit plane</button><button class="ctl" id="bHomeM">home</button><button class="ctl" id="bEarthViewM" title="Earth-observer view">earth view</button>
+        <div class="mobile-view-controls">
+          <span class="sec">View controls</span>
+          <button class="ctl mobile-view-control" id="bRotateLeftM" type="button">Rotate left</button>
+          <button class="ctl mobile-view-control" id="bRotateRightM" type="button">Rotate right</button>
+          <button class="ctl mobile-view-control" id="bRotateUpM" type="button">Rotate up</button>
+          <button class="ctl mobile-view-control" id="bRotateDownM" type="button">Rotate down</button>
+          <button class="ctl mobile-view-control" id="bZoomInM" type="button">Zoom in</button>
+          <button class="ctl mobile-view-control" id="bZoomOutM" type="button">Zoom out</button>
+          <button class="ctl mobile-view-control mobile-view-recenter" id="bRecenterViewM" type="button">Re-centre view</button>
+        </div>
+        <button class="ctl on" id="bOrbitsM" aria-pressed="true">orbits</button>
+        <button class="ctl on" id="bTrailsM" aria-pressed="true">trails</button>
+        <button class="ctl on" id="bLabelsM" aria-pressed="true">labels</button>
+        <button class="ctl" id="bGlowM" aria-pressed="false">zones</button>
+        <button class="ctl on" id="bScientificAnnotationsM" aria-pressed="true">scientific rings</button>
+        <button class="ctl on" id="bDiscM" aria-pressed="true">disc</button>
+        <button class="ctl" id="bSpinMeshM" aria-pressed="false">spin mesh</button>
+          <label id="mobileFieldDensityLabel" for="sQualM">Star field density</label><select class="ctl" id="sQualM" title="Adds heuristically generated background stars around the catalogued central stars.">
+            <option value="0" selected>Off — catalogue only</option><option value="1">Low</option><option value="2">Medium</option><option value="3">High</option>
+          </select>
+      </div>
+      </div>
+    </details>
+    <details class="mobile-section" id="mobileExperimentSection">
+      <summary>Experiment</summary>
+      <div class="pgroup" id="mobileDisplayPhysicsControls">
+        <span class="sec">Physics</span><div class="prow mobile-physics-row">
+          <label for="sFidelityM">Physics fidelity</label><select class="ctl" id="sFidelityM" title="Physics fidelity"><option value="newtonian">Newtonian</option><option value="1pn">1PN</option><option value="adaptive_kerr">Adaptive Kerr</option></select><span class="mini" id="oFidelityStatusM">Newtonian</span>
+          <button class="ctl" id="bCuspM" aria-pressed="false" title="Dark stellar cusp — a roughly spherical concentration of faint stellar remnants around Sgr A*; unlike the accretion flow, it is made of orbiting stars and remnants, not hot gas.">dark cusp</button>
+          <label class="sl" id="mobileDisplaySpinControl">Sgr A* spin <input type="range" id="sSpinAStarM" min="0" max="0.9999" step="0.0001" value="0"><output id="oSpinAStarM">a*=0.0000</output></label>
+        </div>
+      </div>
+      <div class="pgroup" id="mobileDisplayIntruderControls"><span class="sec">Intruder</span><div class="prow"><button class="ctl" id="bConfigureIntruderM" type="button">configure intruder</button><button class="ctl primary optional-shortcut" id="bLaunchM" title="Optional shortcut: drag on the sky to launch an intruder" aria-pressed="false">Launch intruder</button></div><div id="intruderControls"><div><span class="sec">Mass</span><div class="massrow" id="massrowM"><button class="ctl" data-m="20" aria-pressed="false">★ 20 M☉</button><button class="ctl on" data-m="1e3" aria-pressed="true">10³ M☉</button><button class="ctl" data-m="1e4" aria-pressed="false">10⁴ M☉</button><button class="ctl" data-m="1e5" aria-pressed="false">10⁵ M☉</button></div></div></div></div>
+    </details>
+    <details class="mobile-section" id="mobileSessionSection">
+      <summary>Session / numerics</summary>
+      <div class="pgroup"><span class="sec">Numerics</span><div class="prow"><label for="sIntegratorModeM">Integrator request</label><select class="ctl" id="sIntegratorModeM"><option value="plain">Fast - reduced precision</option><option value="yoshida4_trial">High precision - slower</option></select><span class="mini" id="oIntegratorModeM">active: fast</span></div></div>
+    </details>
+    <details class="mobile-section" id="mobileSandboxExperimentSection" hidden>
+      <summary>Sandbox Experiment</summary>
+      <h3 class="sr-only">Intruder</h3>
+      <div class="pgroup"><span class="sec">Physics</span><div class="prow">
+        <label for="sFidelitySandboxM">Physics fidelity</label><select class="ctl" id="sFidelitySandboxM" title="Physics fidelity"><option value="newtonian">Newtonian</option><option value="1pn">1PN</option><option value="adaptive_kerr">Adaptive Kerr</option></select><span class="mini" id="oFidelitySandboxStatusM">Newtonian</span>
+        <label class="sl" for="sSpinAStarSandboxM">Sgr A* spin <input type="range" id="sSpinAStarSandboxM" min="0" max="0.9999" step="0.0001" value="0"><output id="oSpinAStarSandboxM">a*=0.0000</output></label>
+      </div></div>
+      <div class="pgroup"><span class="sec">Intruder</span><div class="prow">
+        <button class="ctl" id="bConfigureIntruderSandboxM" type="button">Configure intruder</button><button class="ctl primary" id="bLaunchSandboxM" title="Drag to launch an intruder" aria-pressed="false">Launch intruder</button>
+      </div></div>
+    </details>
+    <details class="mobile-section" id="mobileScenariosSection">
+      <summary>Scenarios</summary>
+      <h3 class="sr-only">Scenarios</h3>
+      <div class="pgroup scenario-controls">
+        <label for="sScenarioM">Scenario</label><select class="ctl" id="sScenarioM"></select>
+        <p class="scenario-description" id="scenarioDescriptionM">Curated initial-condition scenarios.</p>
+        <label for="scenarioCatalogueFileM">Load scenario catalogue JSON</label><input id="scenarioCatalogueFileM" type="file" accept=".json,application/json">
+        <button class="ctl primary" id="bApplyScenarioM" type="button">Apply scenario</button>
+      </div>
+    </details>
+    <details class="mobile-section" id="mobileAccessibilitySection">
+      <summary>Accessibility and diagnostics</summary>
+      <div class="pgroup"><span class="sec">Motion and status</span><div class="prow"><button class="ctl" id="bCalmMotionM" type="button" aria-pressed="false">calm motion: off</button><button class="ctl" id="bRuntimeStatusM" type="button" aria-expanded="false" aria-controls="runtimeTruthPanel">runtime status</button><button class="ctl" id="bLegM">legend</button></div></div>
+      <!-- Sonification controls reflowed into small,
+           labelled sub-groups (matching the pgroup/sec pattern used
+           above for Sandbox Experiment) rather than one unstructured
+           row of ten controls. Mobile volume added to match desktop's
+           accessible label, value, and output semantics exactly. -->
+      <div class="pgroup"><span class="sec">Sonification</span><div class="prow"><button class="ctl" id="bSonificationM" type="button" aria-pressed="false">sonification: off</button><label for="sSonificationGainM" class="sl" id="sonificationGainControlM"><span class="sr-only">Sonification volume</span>volume <input type="range" id="sSonificationGainM" min="0" max="1" step="0.05" value="0.6"><output id="oSonificationGainM">60%</output></label><label for="sPitchRangeM" class="sl">Pitch range <select class="ctl" id="sPitchRangeM"><option value="low">Low (110-330 Hz)</option><option value="standard" selected>Standard (220-660 Hz)</option><option value="high">High (330-990 Hz)</option></select></label><label for="sSpeechRateM" class="sl">Speech rate <select class="ctl" id="sSpeechRateM"><option value="0.75">0.75×</option><option value="1" selected>1×</option><option value="1.5">1.5×</option><option value="2">2×</option><option value="2.5">2.5×</option><option value="3">3×</option></select></label></div></div>
+      <div class="pgroup"><span class="sec">Continuous sound</span><div class="prow"><button class="ctl" id="bContinuousChannelsM" type="button" aria-pressed="false" title="Requires one explicitly followed body; unavailable during group follow">continuous sound: off</button><button class="ctl" id="bContinuousPauseResumeM" type="button" aria-pressed="false" disabled>pause continuous sound</button></div></div>
+      <div class="pgroup"><span class="sec">Speech</span><div class="prow"><button class="ctl" id="bSonificationLegendM" type="button">Replay sound legend</button><button class="ctl" id="bSonificationSpeakEventsM" type="button" aria-pressed="false">Speak page event messages</button></div></div>
+      <div class="pgroup"><div class="prow"><p id="mobileGestureHelp">Free view: one-finger drag rotates; two-finger pinch zooms and two-finger twist rotates horizontally. Placement mode: drag to aim and launch; it takes priority over free-view rotation. Extra fingers do not control the camera. Press Escape to exit placement.</p><details id="recentEventsDisclosureM"><summary>Recent events</summary><p id="recentEventsHelpM">Factual announced actions and model events from this session. Opening this list does not replay announcements.</p><ol id="recentEventsListM" aria-describedby="recentEventsHelpM"></ol></details></div></div>
+    </details>
+  </div>
+</section>
+ </section>
+<div class="hud" id="hint"></div>
+<div id="canvasFallback" class="sr-only">Canvas view of the SGRA simulation. Use the Bodies and Selected body content to inspect bodies without the canvas.</div>
+<section id="statusRegion" aria-labelledby="statusHeading" class="sr-only"><h2 id="statusHeading">Status</h2><div id="sgraAccessibleStatus" role="status" aria-live="polite" aria-atomic="true"></div></section>
+<div id="sgraRuntimeDisposition" hidden></div>
+</main>
+<script type="application/json" id="scenarioCatalogueDefault">
+{
+  "schemaVersion": 2,
+  "provenance": { "source": "SGRA curated defaults", "version": "c1-default-1" },
+  "scenarios": [
+    {
+      "schemaVersion": 1,
+      "id": "explore-s2-reference",
+      "title": "Explore S2 reference",
+      "shortDescription": "Normal catalogue and field-star Explore scene focused on S2.",
+      "accessibilityDescription": "Explore scene with the normal catalogue S-stars and field population, focused on catalogue star S2.",
+      "sceneContext": "explore",
+      "kind": "initial-condition",
+      "physicsMode": "adaptive_kerr",
+      "centralSpin": { "magnitude": 0, "axisSign": 1 },
+      "intruders": [],
+      "camera": { "preset": "selected-body-follow", "bodyId": "S2" },
+      "provenance": { "source": "SGRA curated defaults", "version": "c1-default-1" }
+    }
+  ],
+  "intruderPresets": [
+    { "id": "near-inward-directed", "title": "Near, inward-directed", "description": "1000 solar masses; launch position 100 astronomical units from Sgr A*; initial direction inward.", "kind": "intruderPreset", "massSolarMasses": 1000, "p0Rel": [200, 0, 0], "p1Rel": [100, 0, 0], "launchMappingVersion": "canonical-v1", "provenance": { "source": "SGRA accepted A13 illustrative preset", "version": "a13-1" } },
+    { "id": "near-offset-directed", "title": "Near, offset-directed", "description": "1000 solar masses; launch position 100 astronomical units from Sgr A*; initial direction inward with an offset.", "kind": "intruderPreset", "massSolarMasses": 1000, "p0Rel": [200, 80, 0], "p1Rel": [100, 0, 0], "launchMappingVersion": "canonical-v1", "provenance": { "source": "SGRA accepted A13 illustrative preset", "version": "a13-1" } },
+    { "id": "distant-inward-directed", "title": "Distant, inward-directed", "description": "1000 solar masses; launch position 1000 astronomical units from Sgr A*; initial direction inward.", "kind": "intruderPreset", "massSolarMasses": 1000, "p0Rel": [2000, 0, 0], "p1Rel": [1000, 0, 0], "launchMappingVersion": "canonical-v1", "provenance": { "source": "SGRA accepted A13 illustrative preset", "version": "a13-1" } },
+    { "id": "distant-offset-directed", "title": "Distant, offset-directed", "description": "1000 solar masses; launch position 1000 astronomical units from Sgr A*; initial direction inward with an offset.", "kind": "intruderPreset", "massSolarMasses": 1000, "p0Rel": [2000, 800, 0], "p1Rel": [1000, 0, 0], "launchMappingVersion": "canonical-v1", "provenance": { "source": "SGRA accepted A13 illustrative preset", "version": "a13-1" } },
+    { "id": "massive-offset-directed", "title": "Massive, offset-directed", "description": "10000 solar masses; launch position 100 astronomical units from Sgr A*; initial direction inward with an offset.", "kind": "intruderPreset", "massSolarMasses": 10000, "p0Rel": [200, 80, 0], "p1Rel": [100, 0, 0], "launchMappingVersion": "canonical-v1", "provenance": { "source": "SGRA accepted A13 illustrative preset", "version": "a13-1" } }
+  ]
+}
+</script>
+
+<script src="./src/app/app_context.js?v=20260815-r6"></script>
+<script src="./src/config/runtime_config.js?v=20260815-r6"></script>
+<script src="./src/app/bootstrap.js?v=20260815-r6"></script>
+<script src="./src/domain/constants.js"></script>
+<script src="./src/domain/star_catalog.js"></script>
+<script src="./src/domain/body_roles.js"></script>
+<script src="./src/domain/body_model.js"></script>
+<script src="./src/domain/creation_provenance.js"></script>
+<script src="./src/physics/force_model_declaration.js"></script>
+<script src="./src/physics/orbital_math.js"></script>
+<script src="./src/physics/physics_index_set.js"></script>
+<script src="./src/physics/capture_surface.js"></script>
+<script src="./src/physics/central_1pn.js"></script>
+<script src="./src/physics/central_spin_orbit.js"></script>
+<script src="./src/physics/central_relativistic_policy.js"></script>
+<script src="./src/physics/central_fidelity_ownership.js"></script>
+<script src="./src/physics/kerr_switch_oracle.js"></script>
+<script src="./src/physics/product_kerr_reference/dp54.js"></script>
+<script src="./src/physics/product_kerr_reference/kerr_schild_metric.js"></script>
+<script src="./src/physics/product_kerr_reference/kerr_hamiltonian_rhs.js"></script>
+<script src="./src/physics/product_kerr_reference/isco.js"></script>
+<script src="./src/physics/product_kerr_runtime_ports.js"></script>
+<script src="./src/physics/product_kerr_runtime_adapter.js"></script>
+<script src="./src/physics/explicit_runtime_ports.js"></script>
+<script src="./src/physics/physics_event_output.js"></script>
+
+<script src="./src/physics/product_kerr_reference/kerr_invariant_recovery.js"></script>
+<script src="./src/physics/sci01b_diagnostic.js"></script>
+<script src="./src/physics/sci01b_physical_classification.js"></script>
+
+
+
+
+
+
+
+
+
+<script src="./src/physics/local_force_model.js"></script>
+<script src="./src/physics/local_timestep_policy.js"></script>
+<script src="./src/physics/field_tracer_lane.js"></script>
+<script src="./src/physics/local_step_integrator.js"></script>
+<script src="./src/physics/local_energy.js"></script>
+<script src="./src/physics/local_events.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="./src/physics/local_integrator.js"></script>
+<script src="./src/physics/advance_adaptive.js"></script>
+<script src="./src/physics/yoshida4_trial_integrator.js"></script>
+<script src="./src/physics/local_js_physics_core.js"></script>
+<script src="./src/encounters/encounter_snapshot.js"></script>
+<script src="./src/encounters/encounter_trajectory.js"></script>
+<script src="./src/encounters/encounter_package.js"></script>
+<script src="./src/encounters/encounter_environment.js"></script>
+<script src="./src/encounters/application_truth.js"></script>
+<script src="./src/app/application_mode.js"></script>
+<script src="./src/scenarios/scenario_catalogue.js"></script>
+<script src="./src/scenarios/scenario_catalogue_controller.js"></script>
+<script src="./src/scenarios/scenario_controller.js"></script>
+<script src="./src/paths/path_geometry.js"></script>
+<script src="./src/paths/trail_samples.js"></script>
+<script src="./src/paths/trail_sampler.js"></script>
+<script src="./src/paths/prediction_engine.js"></script>
+<script src="./src/paths/prediction_clone_integrator.js"></script>
+<script src="./src/paths/prediction_compute.js"></script>
+<script src="./src/orbits/orbit_cache.js"></script>
+<script src="./src/state/simulation_clock.js?v=20260815-r6"></script>
+<script src="./src/state/body_store.js"></script>
+<script src="./src/state/selection_state.js"></script>
+<script src="./src/state/state_descriptors.js"></script>
+<script src="./src/state/hypothesis_catalogue.js"></script>
+<script src="./src/state/activation_state.js"></script>
+<script src="./src/state/simulation_options.js"></script>
+<script src="./src/state/trail_state.js"></script>
+<script src="./src/state/prediction_display_state.js"></script>
+<script src="./src/state/transient_effects.js"></script>
+<script src="./src/state/display_options.js"></script>
+<script src="./src/state/black_hole_model_state.js"></script>
+<script src="./src/state/camera_view_state.js"></script>
+<script src="./src/state/state_diagnostics.js"></script>
+<script src="./src/render/path_renderers.js?v=20260815-r6"></script>
+<script src="./src/ui/dom_bindings.js"></script>
+<script src="./src/ui/hud_view_model.js"></script>
+<script src="./src/ui/hud_view.js"></script>
+<script src="./src/ui/control_bindings.js"></script>
+<script src="./src/ui/action_failure_boundary.js"></script>
+<script src="./src/ui/simulation_application_actions.js"></script>
+<script src="./src/ui/camera_navigation_actions.js"></script>
+<script src="./src/ui/object_interaction_actions.js"></script>
+<script src="./src/ui/ui_actions.js"></script>
+<script src="./src/ui/status_announcer.js"></script>
+<script src="./src/ui/object_list_presentation.js"></script>
+<script src="./src/ui/presentation_controller.js"></script>
+<script src="./src/ui/desktop_drawer_layout.js"></script>
+<script src="./src/controllers/runtime_actions_controller.js"></script>
+<script src="./src/camera/camera_controller.js"></script>
+<script src="./src/render/viewport_state.js"></script>
+<script src="./src/render/camera_projection.js"></script>
+<script src="./src/camera/group_follow_controller.js"></script>
+<script src="./src/render/frame_projection_cache.js"></script>
+<script src="./src/render/render_frame_context.js"></script>
+<script src="./src/render/render_pass_order.js"></script>
+<script src="./src/render/black_hole_environment_pass.js"></script>
+<script src="./src/render/disc_seam_passes.js"></script>
+<script src="./src/render/disc_bending.js"></script>
+<script src="./src/render/disc_raster_kernel.js"></script>
+<script src="./src/render/transient_effects_pass.js"></script>
+<script src="./src/render/body_scene_pass.js"></script>
+<script src="./src/render/frame_dragging_mesh.js"></script>
+<script src="./src/render/scientific_annotation_pass.js"></script>
+<script src="./src/render/scene_renderer.js"></script>
+<script src="./src/runtime/physics_advance_coordinator.js"></script>
+<script src="./src/runtime/runtime_reset_lifecycle.js"></script>
+<script src="./src/runtime/runtime_refresh_coordinator.js?v=20260815-r6"></script>
+<script src="./src/runtime/runtime_loop_controller.js?v=20260815-r6"></script>
+<script src="./src/input/screen_plane_projection.js"></script>
+<script src="./src/input/canvas_pointer_input.js"></script>
+<script src="./src/intruders/intruder_body_factory.js"></script>
+<script src="./src/intruders/intruder_preview_service.js"></script>
+<script src="./src/intruders/intruder_preview_worker_client.js"></script>
+<script src="./src/intruders/orbital_element_launch.js"></script>
+<script src="./src/intruders/injection_momentum_telemetry.js"></script>
+<script src="./src/intruders/intruder_launch_service.js"></script>
+<script src="./src/intruders/intruder_interaction_controller.js"></script>
+<script src="./src/render/intruder_aim_renderer.js"></script>
+<script src="./src/sonification/sonification_settings.js"></script>
+<script src="./src/sonification/audio_arbitration_service.js"></script>
+<script src="./src/sonification/event_earcon_backend.js"></script>
+<script src="./src/sonification/spoken_event_backend.js"></script>
+<script src="./src/sonification/sonification_router.js"></script>
+<script src="./src/sonification/sonification_calibration.js"></script>
+<script src="./src/sonification/continuous_channel_mapping.js"></script>
+<script src="./src/sonification/continuous_channel_observer.js"></script>
+<script src="./src/sonification/continuous_channel_backend.js"></script>
+<script src="./src/sonification/mapping_contracts.js"></script>
+<script src="./src/sonification/legend_speech.js"></script>
+<script src="./src/sonification/sonification_audio_authority.js"></script>
+<script src="./src/sonification/sonification_controller.js"></script>
+
+<script>
+'use strict';
+/* ================================================================
+   SGR A* N‑body simulator — production version
+   All diagnostic code removed, proven physics fixes baked in
+   ================================================================ */
+
+/* ── 1. CONSTANTS ─────────────────────────────────────────────────── */
+const G            = SGRA.Domain.Constants.G;
+const MBH_INIT     = SGRA.Domain.Constants.MBH_INIT;
+const C_AUYR       = SGRA.Domain.Constants.C_AUYR;
+const C2           = SGRA.Domain.Constants.C2;
+const KMS          = SGRA.Domain.Constants.KMS;
+const AU_PER_AS    = SGRA.Domain.Constants.AU_PER_AS;
+const EPOCH0       = SGRA.Domain.Constants.EPOCH0;
+const LAUNCH_SCALE = SGRA.Domain.Constants.LAUNCH_SCALE;
+const EPS2_BH      = SGRA.Domain.Constants.EPS2_BH;
+const EPS2_SS      = SGRA.Domain.Constants.EPS2_SS;
+const R_CAP_FAC    = SGRA.Domain.Constants.R_CAP_FAC;
+const SHADOW_B_CRIT_RS_FAC = SGRA.Domain.Constants.SHADOW_B_CRIT_RS_FAC;
+const DT_MAX       = SGRA.Domain.Constants.DT_MAX;
+const DT_MIN       = SGRA.Domain.Constants.DT_MIN;
+const DT_SAFETY    = SGRA.Domain.Constants.DT_SAFETY;
+const DT_SAFETY_DYN = SGRA.Domain.Constants.DT_SAFETY_DYN || DT_SAFETY;
+const DT_SAFETY_PN = SGRA.Domain.Constants.DT_SAFETY_PN || DT_SAFETY;
+const STEP_MAX     = SGRA.Domain.Constants.STEP_MAX;
+const PRED_DT      = SGRA.Domain.Constants.PRED_DT;
+const PRED_MAX_T   = SGRA.Domain.Constants.PRED_MAX_T;
+const PRED_MAX_PTS = SGRA.Domain.Constants.PRED_MAX_PTS;
+const PRED_BUDGET_MS = SGRA.Domain.Constants.PRED_BUDGET_MS;
+const PRED_INTERVAL = SGRA.Domain.Constants.PRED_INTERVAL;
+const TIER         = SGRA.Domain.Constants.TIER;
+const MAX_VALIDATED_KERR_SPIN = 0.9999;
+
+/* ── Gillessen 2017 S‑stars ────────────────────────────────────────── */
+const SSTARS = SGRA.Domain.StarCatalog.SSTARS;
+
+/* ── Canvas / camera ───────────────────────────────────────────────── */
+const cv=document.getElementById('cv'); let ctx=cv.getContext('2d');
+// This flag is consumed while runtime state owners are constructed below.
+// Declare it before those initializers so development-only diagnostics cannot
+// prevent the page from booting.
+const DEV_MODE = (location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:');
+let W=0, H=0, DPR=1, F=0;
+const viewportState = SGRA.Render.ViewportState.createViewportState();
+const cameraProjection = SGRA.Render.CameraProjection.createCameraProjection();
+const screenPlaneProjection = SGRA.Input.ScreenPlaneProjection.createScreenPlaneProjection(
+  (x, y, z) => cameraProjection.irot(x, y, z)
+);
+const cameraController = SGRA.Camera.CameraController.create({
+  initialState: { yaw: 0.7, pitch: 0.45, dist: 9000, tx: 0, ty: 0, tz: 0 },
+  limits: { minDist: 40, maxDist: 60000, rotateSensitivity: 0.0045, wheelBase: 1.0015 }
+});
+const orbitPlaneView = {
+  transitioning: false,
+  lastRealTime: 0,
+  transitionSeconds: 2.5,
+  targetYaw: 0,
+  targetPitch: 0
+};
+const recenterView = {
+  transitioning: false,
+  lastRealTime: 0,
+  transitionSeconds: 1.0
+};
+function angleDelta(target, current) {
+  let delta = target - current;
+  while (delta <= -Math.PI) delta += 2 * Math.PI;
+  while (delta > Math.PI) delta -= 2 * Math.PI;
+  return delta;
+}
+function currentFollowBody() {
+  const idx = selectionState.getFollowIndex();
+  return idx > 0 && idx < bodies.length ? bodies[idx] : null;
+}
+function beginOrbitPlaneTransition(nx, ny, nz) {
+  const mag = Math.hypot(nx, ny, nz);
+  if (!(mag > 1e-12)) return false;
+  nx /= mag; ny /= mag; nz /= mag;
+  const current = cameraController.getCameraSnapshot();
+  const direct = orbitPlaneOrientationForNormal(nx, ny, nz);
+  const inverse = orbitPlaneOrientationForNormal(-nx, -ny, -nz);
+  const target = orientationDistance(direct, current) <= orientationDistance(inverse, current) ? direct : inverse;
+  orbitPlaneView.transitioning = true;
+  orbitPlaneView.lastRealTime = performance.now();
+  orbitPlaneView.targetYaw = target.yaw;
+  orbitPlaneView.targetPitch = target.pitch;
+  cameraViewState.noteManualCameraChange();
+  if (calmMotionEnabled()) {
+    cameraController.setOrientation(target.yaw, target.pitch);
+    orbitPlaneView.transitioning = false;
+  }
+  return true;
+}
+function startOrbitPlaneViewTransition() {
+  const body = currentFollowBody();
+  if (!body) {
+    toast('Follow a star or intruder first');
+    orbitPlaneView.transitioning = false;
+    return false;
+  }
+  const bh = bodies[0];
+  const rx = body.x - bh.x, ry = body.y - bh.y, rz = body.z - bh.z;
+  const vx = body.vx - bh.vx, vy = body.vy - bh.vy, vz = body.vz - bh.vz;
+  const hx = ry * vz - rz * vy;
+  const hy = rz * vx - rx * vz;
+  const hz = rx * vy - ry * vx;
+  if (!beginOrbitPlaneTransition(hx, hy, hz)) {
+    toast('Orbit plane is not well-defined for this target yet');
+    orbitPlaneView.transitioning = false;
+    return false;
+  }
+  return true;
+}
+function orbitPlaneOrientationForNormal(nx, ny, nz) {
+  const planar = Math.hypot(nx, ny);
+  return {
+    yaw: Math.atan2(nx, ny),
+    pitch: Math.atan2(planar, nz)
+  };
+}
+function orientationDistance(a, b) {
+  return Math.abs(angleDelta(a.yaw, b.yaw)) + Math.abs(angleDelta(a.pitch, b.pitch));
+}
+function updateOrbitPlaneView(realNow) {
+  if (!orbitPlaneView.transitioning) return;
+  const current = cameraController.getCameraSnapshot();
+  const deltaSeconds = orbitPlaneView.lastRealTime > 0 ? Math.max(0, Math.min(0.25, (realNow - orbitPlaneView.lastRealTime) / 1000)) : 0;
+  orbitPlaneView.lastRealTime = realNow;
+  const alpha = deltaSeconds > 0 ? 1 - Math.exp(-deltaSeconds / orbitPlaneView.transitionSeconds) : 0;
+  const yawErr = angleDelta(orbitPlaneView.targetYaw, current.yaw);
+  const pitchErr = angleDelta(orbitPlaneView.targetPitch, current.pitch);
+  const nextYaw = current.yaw + yawErr * alpha;
+  const nextPitch = current.pitch + pitchErr * alpha;
+  cameraController.setOrientation(nextYaw, nextPitch);
+  if (Math.abs(yawErr) + Math.abs(pitchErr) < 1e-3) {
+    cameraController.setOrientation(orbitPlaneView.targetYaw, orbitPlaneView.targetPitch);
+    orbitPlaneView.transitioning = false;
+  }
+}
+function startRecenteringTransition() {
+  if (calmMotionEnabled()) {
+    cameraController.resetTarget();
+    recenterView.transitioning = false;
+    return;
+  }
+  recenterView.transitioning = true;
+  recenterView.lastRealTime = performance.now();
+}
+function updateRecenteringTransition(realNow) {
+  if (!recenterView.transitioning) return;
+  const current = cameraController.getCameraSnapshot();
+  const deltaSeconds = recenterView.lastRealTime > 0 ? Math.max(0, Math.min(0.25, (realNow - recenterView.lastRealTime) / 1000)) : 0;
+  recenterView.lastRealTime = realNow;
+  const alpha = deltaSeconds > 0 ? 1 - Math.exp(-deltaSeconds / recenterView.transitionSeconds) : 0;
+  const nextTx = current.tx * (1 - alpha);
+  const nextTy = current.ty * (1 - alpha);
+  const nextTz = current.tz * (1 - alpha);
+  cameraController.setTarget(nextTx, nextTy, nextTz);
+  if (Math.abs(current.tx) + Math.abs(current.ty) + Math.abs(current.tz) < 1e-2) {
+    cameraController.resetTarget();
+    recenterView.transitioning = false;
+  }
+}
+
+/* ── Runtime state owners ─────────────────────────────────────────── */
+const invalidateForceState = () => SGRA.Physics.LocalForceModel.invalidateForceState();
+const simulationClock = SGRA.State.SimulationClock.createSimulationClock({ now: performance.now(), clockTraceEnabled: DEV_MODE || new URLSearchParams(location.search).get('clockTrace') === '1' }), bodyStore = SGRA.State.BodyStore.createBodyStore({ onForceInputsChanged: invalidateForceState });
+const selectionState = SGRA.State.SelectionState.createSelectionState(), simulationOptions = SGRA.State.SimulationOptions.createSimulationOptions({ onForceInputsChanged: invalidateForceState, maxTier: TIER.length - 1 });
+const trailState = SGRA.State.TrailState.createTrailState(), predictionDisplayState = SGRA.State.PredictionDisplayState.createPredictionDisplayState();
+window.simulationOptions = simulationOptions;
+const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches === true;
+const motionPreference = { systemDefault: reducedMotion, userChoice: null };
+function calmMotionEnabled() { return motionPreference.userChoice === null ? motionPreference.systemDefault : motionPreference.userChoice; }
+const transientEffects = SGRA.State.TransientEffects.createTransientEffects({ flashesEnabled: !reducedMotion, flashMinIntervalMs: 501 }), displayOptions = SGRA.State.DisplayOptions.createDisplayOptions();
+const blackHoleModelState = SGRA.State.BlackHoleModelState.createBlackHoleModelState();
+// Diagnostic-only spin-axis reversal seam (+1 / -1). No UI, no persistence,
+// no descriptor: it exists so the spin-reversal gate can drive axis -> -axis
+// through the real production force path, which a frozen axis and a
+// non-negative magnitude otherwise make impossible. See
+// central_relativistic_policy.js. Not the start of configurable orientation.
+let spinAxisSignDiagnostic = 1;
+window.SGRA_SPIN_DIAG = Object.freeze({
+  getAxisSign: () => spinAxisSignDiagnostic,
+  setAxisSign: sign => { const next = sign === -1 ? -1 : 1; if (next !== spinAxisSignDiagnostic) { spinAxisSignDiagnostic = next; invalidateForceState(); } return spinAxisSignDiagnostic; }
+});
+const cameraViewState = SGRA.State.CameraViewState.createCameraViewState();
+const bodies = bodyStore.all(), trailData = trailState.all(); // live arrays: physics/render mutate items in place.
+const groupFramingState = { radialMode: 'inward' };
+const groupFollowController = SGRA.Camera.GroupFollowController.create({ bodies, cameraController, cameraProjection, viewportState, cameraViewState, calmMotionEnabled, groupFramingState });
+const followGroupDisplayState = groupFollowController.displayState;
+const groupFollowView = groupFollowController.view;
+const groupFollowZoomState = groupFollowController.zoomState;
+const resetGroupFollowCamera = groupFollowController.resetGroupFollowCamera;
+const applyGroupFollowRotate = groupFollowController.applyGroupFollowRotate;
+const applyGroupFollowZoomFactor = groupFollowController.applyGroupFollowZoomFactor;
+const groupFollowKinematics = groupFollowController.groupFollowKinematics;
+const groupFollowDistance = groupFollowController.groupFollowDistance;
+const updateGroupFollowCamera = groupFollowController.updateGroupFollowCamera;
+const groupStatusText = groupFollowController.groupStatusText;
+void groupFollowView;
+void groupFollowKinematics;
+void groupFollowDistance;
+const flashes = transientEffects.flashes(), captures = transientEffects.captures();
+const PathDebug = displayOptions.pathDebugFlags();
+
+let previewRevision = 0;
+
+function RS(){return 2*G*bodies[0].m/C2;}
+function GMBH(){return G*bodies[0].m;}
+
+/* ── Pair interaction helper (must be defined before use) ───────── */
+function pairInteraction(a, b) { return SGRA.Domain.BodyRoles.pairInteraction(a, b); }
+function getBodyById(id) { return SGRA.Domain.BodyModel.getBodyById(bodies, id); }
+function getBodyIndexById(id) { return SGRA.Domain.BodyModel.getBodyIndexById(bodies, id); }
+
+function renderBackground(ctx, starCv) {
+  ctx.setTransform(1,0,0,1,0,0);
+  ctx.globalCompositeOperation='source-over';
+  if(starCv) ctx.drawImage(starCv,0,0);
+  else { ctx.fillStyle='#030407'; ctx.fillRect(0,0,cv.width,cv.height); }
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+}
+
+
+
+
+
+
+
+
+
+function makePredictionDeps() {
+  return {
+    getBodyById,
+    getBodyIndexById,
+    getBodies: () => bodies,
+    getPredictionEngine: () => PredictionEngine,
+    getLocalPredictionCore: () => LocalPredictionCore,
+    computeFuturePath,
+    shouldReplacePredictionPath,
+    samplePredictionAt
+  };
+}
+
+const PredictionEngine = SGRA.Paths.Prediction.makePredictionEngine(makePredictionDeps);
+const PredictionCoreRegistry = SGRA.Paths.Prediction.makePredictionCoreRegistry(makePredictionDeps);
+const LocalPredictionCore = SGRA.Paths.Prediction.makeLocalPredictionCore(makePredictionDeps);
+const WorkerPredictionCore = SGRA.Paths.Prediction.makeWorkerPredictionCore(makePredictionDeps);
+const WebGpuPredictionCore = SGRA.Paths.Prediction.makeWebGpuPredictionCore(makePredictionDeps);
+
+const TrailSampler = SGRA.Paths.TrailSampler.makeTrailSampler(makeTrailSamplerDeps);
+
+PredictionCoreRegistry.register(LocalPredictionCore);
+PredictionCoreRegistry.register(WorkerPredictionCore);
+PredictionCoreRegistry.register(WebGpuPredictionCore);
+
+/* ── Helper functions ─────────────────────────────────────────────── */
+function elementsToState(aAU,e,iD,OmD,wD,tP,t){ return SGRA.Physics.OrbitalMath.elementsToState(aAU,e,iD,OmD,wD,tP,t,bodies[0]); }
+function fieldStar(){
+  const r=1200*Math.pow(40, Math.pow(Math.random(),0.667));
+  const th=Math.acos(2*Math.random()-1),ph=2*Math.PI*Math.random();
+  const x=r*Math.sin(th)*Math.cos(ph),y=r*Math.sin(th)*Math.sin(ph),z=r*Math.cos(th);
+  const m=0.5 + Math.random()**2 * 9.5;
+  const vC=Math.sqrt(GMBH()/r);
+  const tx=-Math.sin(ph),ty=Math.cos(ph);
+  return{name:'',m,x,y,z,vx:tx*vC*.85+(Math.random()-.5)*vC*.25,
+         vy:ty*vC*.85+(Math.random()-.5)*vC*.25,vz:(Math.random()-.5)*vC*.2,
+         ax:0,ay:0,az:0,col:'#8899bb',field:true,prevR:r,prevDR:0, aPN:0, aLT:0};
+}
+
+/* ---- adjustMomentum is removed; frame is pinned to BH ---- */
+
+/* ---- enforcePinnedBHFrame: only enforces Sgr A* invariant ---- */
+function enforcePinnedBHFrame() { return SGRA.Physics.LocalIntegrator.enforcePinnedBHFrame(); }
+
+/* ---- Development-only frame contract checks ---- */
+
+function snapshotBodyKinematics() {
+  return bodies.map(b => ({
+    id: b.id,
+    name: b.name,
+    x: b.x, y: b.y, z: b.z,
+    vx: b.vx, vy: b.vy, vz: b.vz
+  }));
+}
+
+function assertExistingBodiesUnchanged(before, after, excludedIds, label) {
+  const excluded = new Set(excludedIds || []);
+  for (const a of before) {
+    if (excluded.has(a.id)) continue;
+    const b = after.find(x => x.id === a.id);
+    if (!b) continue;
+    const changed =
+      Math.abs(a.x - b.x) > 1e-9 ||
+      Math.abs(a.y - b.y) > 1e-9 ||
+      Math.abs(a.z - b.z) > 1e-9 ||
+      Math.abs(a.vx - b.vx) > 1e-9 ||
+      Math.abs(a.vy - b.vy) > 1e-9 ||
+      Math.abs(a.vz - b.vz) > 1e-9;
+    if (changed) {
+      console.error("Frame contract violation:", label, a, b);
+      throw new Error("Frame contract violation: " + label);
+    }
+  }
+}
+
+function pnFractionPct(r){ return SGRA.Physics.OrbitalMath.pnFractionPct(r, bodies[0]); }
+function relWeight(b){ return SGRA.Physics.OrbitalMath.relWeight(b, bodies[0]); }
+function weightCol(w, alpha){ return SGRA.Physics.OrbitalMath.weightCol(w, alpha); }
+function weightPos(w){ return SGRA.Physics.OrbitalMath.weightPos(w); }
+function relativityState(b){ return SGRA.Physics.OrbitalMath.relativityState(b, bodies[0]); }
+function oscElements(b){ return SGRA.Physics.OrbitalMath.oscElements(b, bodies[0], simulationOptions.isGrEnabled()); }
+function ellipsePoints(el,N){ return SGRA.Physics.OrbitalMath.ellipsePoints(el,N); }
+function makePredictionComputeDeps() {
+  if (makePredictionComputeDeps.cache) return makePredictionComputeDeps.cache;
+  const deps = {
+    getBodies: () => bodies,
+    getSimT: () => simulationClock.getSimTime(),
+    getGrOn: () => simulationOptions.isGrEnabled(),
+    getFidelityMode: () => simulationOptions.getFidelityMode(),
+    getPnRamp: () => simulationOptions.getPnRamp(),
+    getCuspOn: () => simulationOptions.isCuspEnabled(),
+    now: () => performance.now(),
+    pairInteraction,
+    pairInteractionCode: SGRA.Domain.BodyRoles.pairInteractionCode,
+    PAIR_INCLUDE: SGRA.Domain.BodyRoles.PAIR_INCLUDE,
+    PAIR_BACKREACT: SGRA.Domain.BodyRoles.PAIR_BACKREACT,
+    RS,
+    G,
+    C2,
+    C_AUYR,
+    // Same authority as the live path. If these two ever disagree, the
+    // displayed prediction is drawing different physics from the body it
+    // predicts -- see prediction_clone_integrator.js.
+    getSpinMagnitude: () => blackHoleModelState.get('spinMagnitude'),
+    getSpinAxisSign: () => spinAxisSignDiagnostic,
+    EPS2_BH,
+    EPS2_SS,
+    DT_MIN,
+    DT_MAX,
+    DT_SAFETY,
+    DT_SAFETY_DYN,
+    DT_SAFETY_PN,
+    STEP_MAX,
+    PRED_DT,
+    PRED_MAX_T,
+    PRED_MAX_PTS,
+    PRED_BUDGET_MS,
+    R_CAP_FAC,
+    CUSP_M0: SGRA.Domain.Constants.CUSP_M0,
+    CUSP_R0: SGRA.Domain.Constants.CUSP_R0
+  };
+  deps.cloneInBHFrame = extraBody => SGRA.Paths.PredictionCloneIntegrator.cloneInBHFrame(deps, extraBody);
+  deps.accelClone = cl => SGRA.Paths.PredictionCloneIntegrator.accelClone(deps, cl);
+  deps.pickDtClone = (cl, targetIdx) => SGRA.Paths.PredictionCloneIntegrator.pickDtClone(deps, cl, targetIdx);
+  deps.stepClone = (cl, dt) => SGRA.Paths.PredictionCloneIntegrator.stepClone(deps, cl, dt);
+  makePredictionComputeDeps.cache = deps;
+  return deps;
+}
+const predictionComputeDeps = makePredictionComputeDeps();
+
+function cloneInBHFrame(extraBody) {
+  return SGRA.Paths.PredictionCloneIntegrator.cloneInBHFrame(predictionComputeDeps, extraBody);
+}
+function accelClone(cl) {
+  return SGRA.Paths.PredictionCloneIntegrator.accelClone(predictionComputeDeps, cl);
+}
+function stepClone(cl, dt) {
+  return SGRA.Paths.PredictionCloneIntegrator.stepClone(predictionComputeDeps, cl, dt);
+}
+
+function shouldReplacePredictionPath(currentPath, nextPath, bodyRef) {
+  return SGRA.Paths.Prediction.shouldReplacePredictionPath(currentPath, nextPath, bodyRef);
+}
+
+// ---- computeFuturePath with timestamped points and status ----
+function computeFuturePath(idx) {
+  return SGRA.Paths.PredictionCompute.computeFuturePath(predictionComputeDeps, idx);
+}
+
+function samplePredictionAt(path, age){
+  if(!path || !Array.isArray(path.pts) || path.pts.length < 2) return null;
+  const pts = path.pts;
+  if(age < pts[0].t) {
+    const p = pts[0];
+    return {index:0, t:p.t, x:p.x, y:p.y, z:p.z, vx:p.vx||0, vy:p.vy||0, vz:p.vz||0};
+  }
+  if(age > pts[pts.length-1].t) return null;
+  let lo = 0, hi = pts.length - 1;
+  while (hi - lo > 1) {
+    const mid = (lo + hi) >> 1;
+    if (pts[mid].t <= age) lo = mid;
+    else hi = mid;
+  }
+  const a = pts[lo], b = pts[hi];
+  const f=(age-a.t)/Math.max(1e-12,b.t-a.t);
+  return hermitePoint(a, b, f);
+}
+
+function hermitePoint(a, b, u) { return SGRA.Paths.Geometry.hermitePoint(a, b, u); }
+
+function makeTrailSamplerDeps() {
+  return {
+    getBodies: () => bodies,
+    getTrailData: () => trailData,
+    setTrailData: v => { trailState.replaceAll(v); },
+    getSimT: () => simulationClock.getSimTime(),
+    getTrailSeq: () => trailState.getSequence(),
+    setTrailSeq: v => { trailState.setSequence(v); },
+    getTrailLen: () => trailState.getLength(),
+    getShowTrails: () => displayOptions.showTrails(),
+    getBodyIndexById,
+    PredictionEngine,
+    buildTrailSampleAt,
+    shouldAddTrailSample,
+    getBodyPhysicsPresentationState: body => SGRA.Encounter.ApplicationTruth.getBodyPhysicsPresentationState(body, {
+      physicsSelector: simulationOptions.getFidelityMode(),
+      grEnabled: simulationOptions.isGrEnabled(),
+      relWeight: SGRA.Physics.OrbitalMath.relWeight(body, bodies[0])
+    })
+  };
+}
+
+
+function buildTrailSampleAt(body, bh, t, trailSeqNow, physicsState) {
+  return SGRA.Paths.TrailSamples.buildTrailSampleAt(body, bh, t, trailSeqNow, physicsState);
+}
+
+
+
+
+function recordTrailSamplesForCurrentState(source = 'unknown') {
+  return SGRA.Paths.TrailSampler.recordTrailSamplesForCurrentState(
+    makeTrailSamplerDeps,
+    source
+  );
+}
+
+
+function adaptiveProjectCurve(path, start, projectCached, clipX, clipY) {
+  return SGRA.Paths.Geometry.adaptiveProjectCurve(
+    path,
+    start,
+    projectCached,
+    clipX,
+    clipY
+  );
+}
+
+function predictionNeedsRefresh(path, body, simTNow) {
+  return SGRA.Paths.Prediction.predictionNeedsRefresh(
+    makePredictionDeps,
+    path,
+    body,
+    simTNow
+  );
+}
+
+const orbitCacheOwner = SGRA.Orbits.OrbitCache.createOrbitCache({
+  getBodies: () => bodies,
+  oscElements: body => oscElements(body),
+  ellipsePoints: (el, N) => ellipsePoints(el, N),
+  getCamera: () => cameraController.getCameraSnapshot(),
+  getViewport: () => viewportState.getSnapshot()
+});
+const orbitCache = orbitCacheOwner.orbits();
+const renderFrameContextBuilder = SGRA.Render.RenderFrameContext.createRenderFrameContextBuilder();
+const blackHoleEnvironmentPass = SGRA.Render.BlackHoleEnvironmentPass.createBlackHoleEnvironmentPass();
+const transientEffectsPass = SGRA.Render.TransientEffectsPass.createTransientEffectsPass();
+const bodyScenePass = SGRA.Render.BodyScenePass.createBodyScenePass();
+// B-2 seams. discFar/discNear/flowSpinAxes are declared and empty: they are the
+// insertion points for later static-disc and spin work and draw nothing now.
+const discFarPass = SGRA.Render.DiscSeamPasses.createDiscFarPass();
+const discNearPass = SGRA.Render.DiscSeamPasses.createDiscNearPass();
+const flowSpinAxesPass = SGRA.Render.FrameDraggingMesh.createFrameDraggingMeshPass();
+const scientificAnnotationPass = SGRA.Render.ScientificAnnotationPass.createScientificAnnotationPass();
+const sceneRenderer = SGRA.Render.SceneRenderer.createSceneRenderer({
+  blackHoleEnvironment: blackHoleEnvironmentPass,
+  discFar: discFarPass,
+  transientEffects: transientEffectsPass,
+  bodyScene: bodyScenePass,
+  discNear: discNearPass,
+  scientificAnnotations: scientificAnnotationPass,
+  flowSpinAxes: flowSpinAxesPass
+});
+const renderAttribution = Object.freeze({ enabled: false, observe: () => {}, beginFrame: () => {}, pathMetrics: () => ({}), finishFrame: () => null });
+/* WORKBENCH_RENDER_ATTRIBUTION_STRIPPED */
+
+const b0PerfTelemetry = Object.freeze({ isRecording: () => false, recordStep: () => {}, getLastArtifact: () => null, snapshot: () => ({ enabled: false }), recordEvent: () => {} }); /* WORKBENCH_B0_RUNTIME_STRIPPED */
+// Global failure listeners live OUTSIDE the B0 strip block (which ends at the
+// line above) so the generated Release keeps identical failure semantics.
+window.addEventListener('error', event => {
+  try { SGRA_DIAG.markRuntimeFailure('RUNTIME_UNCAUGHT_ERROR', { reason: event?.error?.message || event?.message || 'uncaught browser error' }); } catch (_) { /* failure reporting must never throw */ }
+});
+window.addEventListener('unhandledrejection', event => {
+  try { SGRA_DIAG.markRuntimeFailure('RUNTIME_UNHANDLED_REJECTION', { reason: event?.reason?.message || String(event?.reason || 'unhandled rejection') }); } catch (_) { /* failure reporting must never throw */ }
+});
+const kerrMutualTrace = Object.freeze({ enabled: false, reset: () => {}, record: () => {}, velocity: () => ({ x: 0, y: 0, z: 0 }), stepSummary: () => null, snapshot: () => ({}), setBodyFilter: () => {} });
+const kerrOwnershipTelemetry = Object.freeze({ enabled: false });
+const acceptedStateCapture = Object.freeze({ enabled: false, runId: null, reset: () => {} });
+/* WORKBENCH_OPTIONAL_DIAGNOSTICS_STRIPPED */
+const closeApproachKerrProfile = null; /* WORKBENCH_CLOSE_APPROACH_DIAGNOSTIC_STRIPPED */
+const scientificTrace = Object.freeze({ enabled: false });
+/* WORKBENCH_SCIENTIFIC_TRACE_STRIPPED */
+let explicitRuntimePorts = null;
+let explicitPhysicsDeps = null;
+let physicsEventOutput = null;
+if (SGRA.Physics.ExplicitRuntimePorts?.create) {
+explicitRuntimePorts = SGRA.Physics.ExplicitRuntimePorts.create({
+  world: { getBodies: () => bodies },
+  clock: { getSimTime: () => simulationClock.getSimTime(), setSimTime: t => simulationClock.setSimTime(t), advanceSimTime: dt => simulationClock.advanceSimTime(dt) },
+  modes: {
+    isGrEnabled: () => simulationOptions.isGrEnabled(),
+    getPnRamp: () => simulationOptions.getPnRamp(),
+    isCuspEnabled: () => simulationOptions.isCuspEnabled(),
+    getIntegratorComposition: () => simulationOptions.getIntegratorComposition(),
+    getFidelityMode: () => simulationOptions.getFidelityMode(),
+    isAutomaticFidelityEnabled: () => simulationOptions.getFidelityMode() === 'adaptive_kerr',
+    getSpinMagnitude: () => blackHoleModelState.get('spinMagnitude'),
+    getSpinAxisSign: () => spinAxisSignDiagnostic,
+    isCentralFramePinnedForSandbox: () => true,
+    shouldUsePeriTimestep: () => false
+  },
+  telemetry: { scientificTrace, kerrMutualTrace, kerrOwnershipTelemetry, acceptedStateCapture, kerrProfile: closeApproachKerrProfile, perfBaseline: b0PerfTelemetry, getNow: () => performance.now(), getRunId: () => acceptedStateCapture.runId, observer: { timestepAttributionEnabled: () => b0PerfTelemetry.isRecording(), timestep_selected: payload => b0PerfTelemetry.recordStep(payload) } },
+  fidelity: { isKerrOwned: body => SGRA.Physics.LocalStepIntegrator.isKerrOwned(body) },
+  application: {
+    invalidateOrbitCaches: body => orbitCacheOwner.invalidateBody(body),
+    invalidateKerrMassState: ({ absorbedBody, centralBody }) => {
+      const oldMass = centralBody.m - (Number.isFinite(absorbedBody?.m) ? absorbedBody.m : 0);
+      const adapter = SGRA.Physics.ProductKerrRuntimeAdapter;
+      const invalidated = adapter && typeof adapter.invalidateForCentralMassChange === 'function' ? adapter.invalidateForCentralMassChange(bodies, oldMass, centralBody.m) : 0;
+      if (window.SGRA_DIAG && typeof window.SGRA_DIAG.recordEvent === 'function') window.SGRA_DIAG.recordEvent('CENTRAL_MASS_CHANGED', { subsystem: 'kerr', requested: oldMass, actual: centralBody.m, bodyId: absorbedBody?.id ?? null, bodyName: absorbedBody?.name || null, reason: 'capture' });
+      if (invalidated > 0 && window.SGRA_DIAG && typeof window.SGRA_DIAG.recordEvent === 'function') window.SGRA_DIAG.recordEvent('KERR_SCALES_INVALIDATED', { subsystem: 'kerr', requested: invalidated, actual: invalidated, reason: 'central mass changed' });
+    },
+    onCentralMassChangedByCapture: () => { orbitCacheOwner.clear(); predictionDisplayState.clearFollowedPath(); PredictionEngine.invalidateAll('capture-central-mass-changed'); },
+    addFlash: effect => transientEffects.addFlash(effect),
+    recordCapture: eventTime => { transientEffects.incrementCaptureCount(); transientEffects.addCapture({ t: 0, eventTime: Number.isFinite(eventTime) ? eventTime : simulationClock.getSimTime() }); return transientEffects.getCaptureCount(); },
+    removeTrailAt: index => trailData.splice(index, 1)[0] || null,
+    removeBodyAt: index => bodyStore.removeAt(index),
+    getFollowIndex: () => selectionState.getFollowIndex(), setFollowIndex: index => selectionState.setFollowIndex(index),
+    hideCard: () => hideCard(), populateStarSel: () => populateStarSel(), setBaselineEnergy: value => bodyStore.setBaselineEnergy(value), setBaselineEnergyBreakdown: value => bodyStore.setBaselineEnergyBreakdown(value), toast: (...args) => window.toast?.(...args)
+  },
+  scheduler: { getSchedulerMode: () => 'global', blockExecutionMode: 'global-adaptive' }
+  ,runtime: { showTrails: () => displayOptions.showTrails(), setSubstepTrailSampling: value => simulationClock.setSubstepTrailSampling(value), recordTrailSample: source => recordTrailSamplesForCurrentState(source), addPendingAdvanceDelta: delta => simulationClock.addPendingAdvanceDelta(delta), getPhysicsDeadlineMs: () => null, getNow: () => performance.now() }
+});
+const explicitWorldClock = Object.freeze({ ...explicitRuntimePorts.world, ...explicitRuntimePorts.clock });
+const explicitModes = Object.freeze({ ...explicitRuntimePorts.modes });
+const explicitTelemetry = Object.freeze({ ...explicitRuntimePorts.telemetry });
+explicitPhysicsDeps = Object.freeze({ ...explicitWorldClock, ...explicitModes, ...explicitTelemetry, ...explicitRuntimePorts.fidelity, ...explicitRuntimePorts.application, ...explicitRuntimePorts.runtime });
+SGRA.Physics.LocalForceModel.configure({ ...explicitWorldClock, ...explicitModes, ...explicitTelemetry });
+SGRA.Physics.LocalTimestepPolicy.configure({ ...explicitWorldClock, ...explicitModes, ...explicitTelemetry });
+SGRA.Physics.LocalStepIntegrator.configure({ ...explicitPhysicsDeps });
+physicsEventOutput = SGRA.Physics.PhysicsEventOutput.create();
+SGRA.Physics.LocalEvents.configure({ ...explicitWorldClock, ...explicitModes, ...explicitTelemetry, ...explicitRuntimePorts.fidelity, removeBodyAt: explicitRuntimePorts.application.removeBodyAt, eventOutput: physicsEventOutput });
+SGRA.Physics.LocalEnergy.configure(explicitRuntimePorts.world);
+SGRA.Physics.FieldTracerLane.configure({ ...explicitWorldClock, ...explicitModes });
+SGRA.Physics.Yoshida4TrialIntegrator.configure({ ...explicitWorldClock, ...explicitModes, ...explicitTelemetry });
+SGRA.Physics.LocalJsPhysicsCore.configure({ ...explicitPhysicsDeps, ...explicitRuntimePorts.scheduler });
+/* WORKBENCH_DIAG_HARNESS_CONFIGURE_STRIPPED */
+}
+SGRA.Physics.ProductKerrRuntimeAdapter = SGRA.Physics.ProductKerrRuntimeAdapter.create({
+  physicsInputs: {
+    constants: SGRA.Domain.Constants,
+    kerr: SGRA.Physics.Kerr,
+    captureSurface: SGRA.Physics.CaptureSurface,
+    getSpinMagnitude: () => blackHoleModelState.get('spinMagnitude'),
+    getSpinAxisSign: () => spinAxisSignDiagnostic
+  },
+  clock: { getSimTime: () => simulationClock.getSimTime() },
+  telemetry: {
+    kerrMutualTrace,
+    kerrOwnershipTelemetry,
+    kerrProfile: closeApproachKerrProfile,
+    perfBaseline: b0PerfTelemetry,
+    now: () => performance.now()
+  }
+});
+function toBH(x,y,z){const b=bodies[0];return[x-b.x,y-b.y,z-b.z];}
+function shouldAddTrailSample(body, trail, bh, simTNow) {
+  return SGRA.Paths.TrailSamples.shouldAddTrailSample(body, trail, bh, simTNow);
+}
+function projectBH(bx,by,bz, cameraSnapshot = cameraController.getCameraSnapshot()){ return cameraProjection.projectBH(bx, by, bz, cameraSnapshot, viewportState.getLive()); }
+function planePoint(sx,sy){ return screenPlaneProjection.planePoint(sx, sy, cameraController.getCameraSnapshot(), viewportState.getLive(), bodies[0]); }
+function auToPx(r, cameraSnapshot = cameraController.getCameraSnapshot()){ return cameraProjection.auToPx(r, cameraSnapshot, viewportState.getLive()); }
+let starCv;
+let lastStarfieldWidth = 0, lastStarfieldHeight = 0, lastStarfieldDpr = 0;
+function makeStars(){
+  starCv=document.createElement('canvas');starCv.width=cv.width;starCv.height=cv.height;
+  const c=starCv.getContext('2d');
+  c.fillStyle='#030407';c.fillRect(0,0,cv.width,cv.height);
+  const g=c.createRadialGradient(starCv.width/2,starCv.height/2,0,starCv.width/2,starCv.height/2,
+          Math.min(starCv.width,starCv.height)*.5);
+  g.addColorStop(0,'rgba(80,40,20,.16)');g.addColorStop(1,'rgba(0,0,0,0)');
+  c.fillStyle=g;c.fillRect(0,0,starCv.width,starCv.height);
+  for(let i=0,N=Math.floor(starCv.width*starCv.height/3200);i<N;i++){
+    const r=Math.random();
+    c.fillStyle=r<.8?`rgba(190,205,230,${.1+r*.22})`:`rgba(255,200,150,${.15+r*.3})`;
+    const s=(r<.93?1:1.6)*DPR*(.6+r*.7);
+    c.fillRect(Math.random()*starCv.width,Math.random()*starCv.height,s,s);
+  }
+}
+// SGRA-SPEC-001 B-3B section 11. Configuration diagnostics, distinct from the
+// numerical/physics diag harness (window.SGRA_DIAG, src/diag/diag_harness.js).
+// Read-only accessor; nothing here mutates state.
+window.SGRA_STATE_DIAG = Object.freeze({
+  snapshot: () => SGRA.State.StateDiagnostics.buildConfigurationDiagnostics({
+    simulationOptions,
+    displayOptions,
+    blackHoleModelState,
+    cameraViewState
+  }),
+  fieldInventory: () => SGRA.State.StateDiagnostics.fieldInventory(),
+  catalogueStatus: () => SGRA.State.HypothesisCatalogue.catalogueStatus()
+});
+
+function draw(){
+  updateOrbitPlaneView(performance.now());
+  updateRecenteringTransition(performance.now());
+  const cameraSnapshot = cameraController.getCameraSnapshot();
+  cameraProjection.setOrientation(cameraSnapshot.yaw, cameraSnapshot.pitch);
+  cameraViewState.syncFromCamera(cameraSnapshot);
+  const frame = renderFrameContextBuilder.build({
+    ctx,
+    canvas: cv,
+    starCanvas: starCv,
+    viewport: viewportState.getSnapshot(),
+    camera: cameraSnapshot,
+    bodies,
+    followedIndex: selectionState.getFollowIndex(),
+    display: {
+      showOrbits: displayOptions.showOrbits(),
+      showTrails: displayOptions.showTrails(),
+      showLabels: displayOptions.showLabels(),
+      followFocus: followGroupDisplayState.active || selectionState.getFollowIndex() > 0,
+      showGlow: displayOptions.showGlow(),
+      isCuspEnabled: simulationOptions.isCuspEnabled(),
+      showScientificAnnotations: displayOptions.showScientificAnnotations(),
+      showDisc: displayOptions.showDisc(),
+      showSpinMesh: displayOptions.showSpinMesh(),
+      // AUTHORITATIVE a*. The retired `spinMeshSpin: 0.65` was a render-only
+      // constant that let the mesh depict a spin the physics did not have.
+      // The mesh and the Lense-Thirring term now read the same value from the
+      // same owner (BlackHoleModelState.spinMagnitude).
+      spinAStar: blackHoleModelState.get('spinMagnitude') * (spinAxisSignDiagnostic === -1 ? -1 : 1)
+    },
+    physics: { simT: simulationClock.getSimTime(), RS, pnFractionPct,
+      spinMagnitude: blackHoleModelState.get('spinMagnitude') },
+    trails: { data: trailData },
+    predictions: {
+      followedPath: predictionDisplayState.getFollowedPath()
+    },
+    effects: { flashes, captures },
+    orbitCache,
+    pathDebug: PathDebug,
+    cameraBasis: { yaw: cameraSnapshot.yaw, pitch: cameraSnapshot.pitch },
+    projectBH,
+    toBH,
+    auToPx,
+    renderBackground,
+    pathRenderers: SGRA.Render.PathRenderers,
+    pathAttribution: renderAttribution.pathMetrics(),
+    samplePredictionAt,
+    adaptiveProjectCurve,
+    relWeight,
+    weightCol,
+    weightPos,
+    formatMass: fmtM,
+    intruderAim: {
+      renderer: SGRA.Render.IntruderAimRenderer,
+      getAim: () => intruders.getAim(),
+      isAiming: () => intruders.isAiming(),
+      ensurePreview: () => intruders.ensurePreview(),
+      getMass: () => intruders.getMass()
+    },
+    constants: { KMS, MBH_INIT, R_CAP_FAC, SHADOW_B_CRIT_RS_FAC }
+    ,realNow: performance.now(), reducedMotion: calmMotionEnabled()
+  });
+  sceneRenderer.render(frame);
+}
+function renderFrame() {
+  renderAttribution.beginFrame();
+  draw();
+  return renderAttribution.finishFrame(null);
+}
+function fmtM(m){return m>=1e5?'10⁵M☉':m>=1e4?'10⁴M☉':m>=1e3?'10³M☉':m.toFixed(0)+' M☉';}
+
+// --- intruder workflow (SGRA.Intruders) --------------------------------------
+const intruderPreview = SGRA.Intruders.PreviewService.createPreviewService({
+  cloneInBHFrame, accelClone, stepClone,
+  schwarzschildRadius: RS,
+  now: () => performance.now(),
+  constants: { G, LAUNCH_SCALE, R_CAP_FAC, DT_MIN: SGRA.Domain.Constants.DT_MIN, DT_SAFETY_DYN: SGRA.Domain.Constants.DT_SAFETY_DYN, EPS2_SS: SGRA.Domain.Constants.EPS2_SS },
+  captureSurface: SGRA.Physics.CaptureSurface
+});
+
+// AIM-PERF: off-main-thread confirmation for a P2 provisional verdict. See
+// src/workers/sgra_preview_worker.js for what this is and, just as
+// importantly, what it deliberately is NOT for. Absolute URLs (rather than
+// paths relative to the worker script) so the worker can importScripts()
+// them regardless of where it itself was served from.
+const intruderPreviewWorker = (() => {
+  const PHYSICS_FILES = [
+    'src/domain/constants.js', 'src/domain/body_roles.js', 'src/physics/orbital_math.js',
+    'src/physics/capture_surface.js', 'src/physics/central_1pn.js', 'src/physics/central_spin_orbit.js',
+    'src/physics/central_relativistic_policy.js', 'src/physics/central_fidelity_ownership.js',
+    'src/physics/product_kerr_reference/dp54.js', 'src/physics/product_kerr_reference/kerr_schild_metric.js',
+    'src/physics/product_kerr_reference/kerr_hamiltonian_rhs.js', 'src/physics/product_kerr_runtime_ports.js',
+    'src/physics/product_kerr_runtime_adapter.js', 'src/physics/product_kerr_reference/kerr_invariant_recovery.js',
+    'src/physics/sci01b_diagnostic.js', 'src/physics/sci01b_physical_classification.js',
+    'src/paths/prediction_clone_integrator.js', 'src/intruders/intruder_preview_service.js'
+  ];
+  const abs = p => new URL(p, document.baseURI).href;
+  return SGRA.Intruders.PreviewWorkerClient.createPreviewWorkerClient({
+    workerScriptUrl: abs('src/workers/sgra_preview_worker.js'),
+    physicsScriptUrls: PHYSICS_FILES.map(abs)
+  });
+})();
+const intruderPreviewWorkerConstants = {
+  G, C2: SGRA.Domain.Constants.C2, C_AUYR: SGRA.Domain.Constants.C_AUYR,
+  EPS2_BH: SGRA.Domain.Constants.EPS2_BH, EPS2_SS: SGRA.Domain.Constants.EPS2_SS,
+  DT_MIN: SGRA.Domain.Constants.DT_MIN, DT_MAX: SGRA.Domain.Constants.DT_MAX,
+  DT_SAFETY: SGRA.Domain.Constants.DT_SAFETY, DT_SAFETY_DYN: SGRA.Domain.Constants.DT_SAFETY_DYN,
+  DT_SAFETY_PN: SGRA.Domain.Constants.DT_SAFETY_PN, CUSP_M0: SGRA.Domain.Constants.CUSP_M0,
+  CUSP_R0: SGRA.Domain.Constants.CUSP_R0, LAUNCH_SCALE, R_CAP_FAC
+};
+
+const intruderLaunch = SGRA.Intruders.LaunchService.createLaunchService({
+  allocateId: () => bodyStore.allocateId(),
+  getBlackHole: () => bodies[0],
+  getBodies: () => bodies,
+  getFrameContext: () => {
+    const h = SGRA.Diag && SGRA.Diag.Harness;
+    return h && typeof h.getInjectionContext === 'function'
+      ? h.getInjectionContext()
+      : { epoch: EPOCH0 + simulationClock.getSimTime(), frameIndex: 0, stepIndex: 0, pinned: true };
+  },
+  appendBody: (b) => bodyStore.append(b),
+  appendEmptyTrail: () => { trailState.ensureBodySlots(bodies.length); },
+  enforcePinnedBHFrame,
+  refreshAcceleration: () => SGRA.Physics.LocalIntegrator.computeAccel(),
+  refreshEnergyBaseline: () => {
+    bodyStore.setBaselineEnergy(SGRA.Physics.LocalIntegrator.totalEnergy());
+    bodyStore.setBaselineEnergyBreakdown(SGRA.Physics.LocalEnergy.roleEnergyBreakdown());
+  },
+  createIntruderBody: SGRA.Intruders.BodyFactory.createIntruderBody,
+  captureSurface: SGRA.Physics.CaptureSurface,
+  snapshotBodyKinematics,
+  assertExistingBodiesUnchanged,
+  publishInjectionTransaction: (record) => {
+    const h = SGRA.Diag && SGRA.Diag.Harness;
+    if (h && typeof h.recordInjectionTransaction === 'function') h.recordInjectionTransaction(record);
+  },
+  isDevMode: () => DEV_MODE,
+  constants: { LAUNCH_SCALE }
+});
+
+const intruders = SGRA.Intruders.InteractionController.createInteractionController({
+  screenToWorld: (sx, sy) => planePoint(sx, sy),
+  toBHRelative: (x, y, z) => toBH(x, y, z),
+  getBlackHoleMass: () => bodies[0].m,
+  getCameraSnapshot: () => cameraController.getCameraSnapshot(),
+  computePreview: (p0, p1, m) => intruderPreview.computePreview(p0, p1, m),
+  createPreviewJob: (p0, p1, m) => intruderPreview.createPreviewJob(p0, p1, m),
+  getPreviewRevision: () => previewRevision,
+  // AIM-PERF: hand off a P2 provisional verdict's background confirmation to
+  // a Worker when one is available; the controller falls back to its
+  // existing main-thread behaviour untouched if isAvailable() is false or a
+  // run ever errors (see intruder_preview_worker_client.js / the controller's
+  // onError handling).
+  runBackgroundInWorker: intruderPreviewWorker.isAvailable() ? (p0, p1, m, callbacks) => intruderPreviewWorker.run({
+    p0, p1, mass: m, bodies,
+    mode: simulationOptions.getFidelityMode(),
+    spin: blackHoleModelState.get('spinMagnitude'),
+    pnRamp: simulationOptions.getPnRamp(),
+    cuspOn: simulationOptions.isCuspEnabled(),
+    constants: intruderPreviewWorkerConstants
+  }, callbacks) : undefined,
+  launch: (p0, p1, m) => intruderLaunch.launch(p0, p1, m),
+  scheduleFrame: (cb) => requestAnimationFrame(cb),
+  onLaunched: (body) => {
+    const spd = Math.hypot(body.vx - bodies[0].vx, body.vy - bodies[0].vy, body.vz - bodies[0].vz);
+    toast(`${body.star ? '★ star' : 'IMBH'} ${fmtM(body.m)} launched · ${(spd * KMS).toFixed(0)} km/s · tap to follow`);
+    populateStarSel();
+  },
+  onLaunchRejected: (error) => {
+    const message = error.message || 'Intruder launch rejected.';
+    announceStatus(message, STATUS_PRIORITY.VALIDATION, STATUS_CATEGORY.VALIDATION);
+    toast(message);
+  },
+  onSelect: (x, y) => selectAt(x, y),
+  constants: { G, LAUNCH_SCALE }
+});
+const uiElements = SGRA.UI.DomBindings.bindDom(document);
+SGRA.Runtime.RuntimeResetLifecycle.assertRequiredInterfaces({
+  clock: simulationClock,
+  localTimestepPolicy: SGRA.Physics.LocalTimestepPolicy,
+  yoshida4TrialIntegrator: SGRA.Physics.Yoshida4TrialIntegrator,
+  localStepIntegrator: SGRA.Physics.LocalStepIntegrator,
+  localForceModel: SGRA.Physics.LocalForceModel
+});
+const runtimeResetLifecycle = SGRA.Runtime.RuntimeResetLifecycle.createRuntimeResetLifecycle({
+  fieldTracerLane: SGRA.Physics.FieldTracerLane,
+  pathRenderers: SGRA.Render.PathRenderers,
+  localForceModel: SGRA.Physics.LocalForceModel,
+  localStepIntegrator: SGRA.Physics.LocalStepIntegrator,
+  localEvents: SGRA.Physics.LocalEvents,
+  yoshida4TrialIntegrator: SGRA.Physics.Yoshida4TrialIntegrator,
+  diagnostics: Object.freeze({ reset: () => {} }) /* WORKBENCH_DIAGNOSTIC_RESET_OWNER_STRIPPED */
+});
+function resetRuntimeStateForNewRun() { runtimeResetLifecycle.resetRuntimeStateForNewRun(); }
+function init(mode = applicationModeController.getMode()){
+  previewRevision += 1;
+  if (typeof physicsAdvanceCoordinator !== 'undefined') physicsAdvanceCoordinator.clearFailure?.();
+  resetRuntimeStateForNewRun();
+  kerrMutualTrace.reset();
+  simulationOptions.activateRequestedIntegratorComposition();
+  bodyStore.clear();trailState.reset();transientEffects.clear();
+  simulationClock.reset();
+  if(typeof simulationClock.resyncRealTime==='function') simulationClock.resyncRealTime(performance.now(), true);
+  else if(typeof simulationClock.syncRealTime==='function') simulationClock.syncRealTime(performance.now(), true);
+  selectionState.clear();
+  if(typeof intruderLaunch!=="undefined")intruderLaunch.resetSequence();
+  bodyStore.resetIdSequence(1);
+  predictionDisplayState.reset();orbitCacheOwner.clear();
+  TrailSampler.clearAll();
+  PredictionEngine.invalidateAll('reset');
+  const testFixture = null; /* WORKBENCH_B0_FIXTURE_SELECTION_STRIPPED */
+  if (testFixture) {
+    const config = testFixture.state.options || {};
+    simulationOptions.setGrEnabled(config.grOn === true); simulationOptions.setCuspEnabled(config.cuspOn === true); simulationOptions.setTier(config.tier);
+    simulationOptions.setFidelityMode(testFixture.state.runtimeTruth?.requestedFidelity || 'adaptive_kerr');
+    const requestedComposition = config.integratorComposition?.requested || config.integratorComposition;
+    if (requestedComposition) { simulationOptions.requestIntegratorComposition(requestedComposition); simulationOptions.activateRequestedIntegratorComposition(); }
+    const sourceSpin = testFixture.state.runtimeTruth?.spin?.centralSpinParameter;
+    if (Number.isFinite(sourceSpin)) blackHoleModelState.set('spinMagnitude', Math.min(MAX_VALIDATED_KERR_SPIN, Math.abs(sourceSpin)));
+    simulationClock.setSimTime(testFixture.state.simTime);
+    simulationClock.setPlaying(false);
+    window.__SGRA_TEST_B0_FIXTURE_PROVENANCE__ = { fixture_id: testFixture.id, status: testFixture.status, source_capture_sha256: testFixture.source.sha256, derived_payload_sha256: testFixture.derivedPayloadSha256, controller_state: 'fresh-controller-state' };
+    for (const body of testFixture.state.bodies) bodyStore.append(structuredClone(body));
+  } else {
+  bodyStore.append({name:'Sgr A*',m:MBH_INIT,x:0,y:0,z:0,vx:0,vy:0,vz:0,ax:0,ay:0,az:0,bh:true,col:'#ffb27a', aPN:0, aLT:0});
+  if (mode === 'sandbox') {
+    // Sandbox starts as a controlled BH-only experiment. Intruders are added
+    // only through the existing launch services after this boundary is crossed.
+  } else {
+  for(const[nm,as,e,i,Om,w,tP,m]of SSTARS){
+    const s=elementsToState(as*AU_PER_AS,e,i,Om,w,tP,EPOCH0);
+    bodyStore.append({name:nm,m,...s,ax:0,ay:0,az:0,col:'#bcd2ff',mag:m,
+                 prevR:0,prevDR:0,legMinR:null,lastPeriT:null, aPN:0, aLT:0});
+  }
+  const nFS=TIER[simulationOptions.getTier()].fs;
+  for(let i=0;i<nFS;i++)bodyStore.append(fieldStar());
+  }
+  }
+  // Frame is pinned to BH; no momentum correction.
+  enforcePinnedBHFrame();
+  trailState.ensureBodySlots(bodies.length);
+  bodyStore.normalizeStructure();
+  SGRA.Physics.LocalIntegrator.computeAccel();
+  bodyStore.setBaselineEnergy(SGRA.Physics.LocalIntegrator.totalEnergy());
+  bodyStore.setBaselineEnergyBreakdown(SGRA.Physics.LocalEnergy.roleEnergyBreakdown());
+  trailState.setLength(TIER[simulationOptions.getTier()].trl);
+  const activatedTier = simulationOptions.activateTier();
+  if (window.SGRA_DIAG && typeof window.SGRA_DIAG.recordEvent === 'function') {
+    window.SGRA_DIAG.recordEvent('QUALITY_CHANGE_ACTIVATED', { subsystem: 'quality', actual: activatedTier, reason: 'scene initialized' });
+  }
+  if (scientificTrace.enabled) {
+    const requestedBody = new URLSearchParams(location.search).get('scientificBody');
+    const selected = requestedBody == null ? bodies.find(body => !body.bh && !body.captured) : requestedBody;
+    if (selected != null) scientificTrace.start({ bodyId: selected.id ?? selected, experimentId: 'production-scientific-trace' });
+  }
+  syncIntegratorModeUi();
+}
+let presentationController;
+function updateHUD(...args) { return presentationController?.updateHUD(...args); }
+function updateObjectList(...args) { return presentationController?.updateObjectList(...args); }
+function surfaceIsOpen(...args) { return presentationController?.surfaceIsOpen(...args); }
+function toggleSurface(...args) { return presentationController?.toggleSurface(...args); }
+function collapseObjectsForGroupFollow(...args) { return presentationController?.collapseObjectsForGroupFollow(...args); }
+function restoreObjectsAfterGroupFollow(...args) { return presentationController?.restoreObjectsAfterGroupFollow(...args); }
+function announceSceneSummary(...args) { return presentationController?.announceSceneSummary(...args); }
+function updateRuntimeTruth(...args) { return presentationController?.updateRuntimeTruth(...args); }
+function updateSelectedInspector(...args) { return presentationController?.updateSelectedInspector(...args); }
+function updateViewModeBadge(...args) { return presentationController?.updateViewModeBadge(...args); }
+function consumePhysicsEvents() {
+  const events = physicsEventOutput.drain();
+  for (const event of events) {
+    const { body, centralBody, index } = event.payload;
+    if (event.type === 'bodyCaptured') {
+      explicitRuntimePorts.application.recordCapture(event.payload.eventTime);
+      explicitRuntimePorts.application.removeTrailAt(index);
+      explicitRuntimePorts.application.invalidateOrbitCaches(body);
+      const followIndex = explicitRuntimePorts.application.getFollowIndex();
+      if (followIndex === index) {
+        explicitRuntimePorts.application.setFollowIndex(-1);
+        explicitRuntimePorts.application.hideCard();
+      } else if (followIndex > index) explicitRuntimePorts.application.setFollowIndex(followIndex - 1);
+      explicitRuntimePorts.application.populateStarSel();
+      explicitRuntimePorts.application.setBaselineEnergy(SGRA.Physics.LocalEnergy.totalEnergy());
+      explicitRuntimePorts.application.setBaselineEnergyBreakdown(SGRA.Physics.LocalEnergy.roleEnergyBreakdown());
+      explicitRuntimePorts.application.invalidateKerrMassState({ absorbedBody: body, centralBody });
+      explicitRuntimePorts.application.onCentralMassChangedByCapture({ absorbedBody: body, centralBody });
+      explicitRuntimePorts.application.toast(`⚫ ${body.name || 'star'} accreted — Sgr A* ${(centralBody.m / 1e6).toFixed(3)}×10⁶M☉`);
+    } else if (event.type === 'bodyEjected') {
+      explicitRuntimePorts.application.removeTrailAt(index);
+      explicitRuntimePorts.application.invalidateOrbitCaches(body);
+      const followIndex = explicitRuntimePorts.application.getFollowIndex();
+      if (followIndex === index) {
+        explicitRuntimePorts.application.setFollowIndex(-1);
+        explicitRuntimePorts.application.hideCard();
+      } else if (followIndex > index) explicitRuntimePorts.application.setFollowIndex(followIndex - 1);
+      explicitRuntimePorts.application.populateStarSel();
+      explicitRuntimePorts.application.setBaselineEnergy(SGRA.Physics.LocalEnergy.totalEnergy());
+      explicitRuntimePorts.application.setBaselineEnergyBreakdown(SGRA.Physics.LocalEnergy.roleEnergyBreakdown());
+      explicitRuntimePorts.application.toast(`↗ ${body.name || 'body'} ejected`);
+    } else if (event.type === 'pericentre') {
+      if (event.payload.flash) explicitRuntimePorts.application.addFlash({ b: body, t: 0 });
+      if (event.payload.notify) explicitRuntimePorts.application.toast(`${body.name || '?'} pericentre · ${event.payload.radius.toFixed(0)} AU · ${event.payload.speedKms.toFixed(0)} km/s`);
+    }
+  }
+}
+// Errors thrown inside the frame loop are caught by the runtime coordinators
+// and never reach window.onerror. Surface them to runtime diagnostics (at most
+// once per five seconds, so a per-frame fault cannot flood the event ring) so
+// they are visible to users, diagnostics exports and behavioural tests.
+let lastFrameLoopErrorReportMs = -Infinity;
+function reportFrameLoopError(error) {
+  console.error(error);
+  const nowMs = performance.now();
+  if (nowMs - lastFrameLoopErrorReportMs < 5000) return;
+  lastFrameLoopErrorReportMs = nowMs;
+  try { SGRA_DIAG.markRuntimeFailure('RUNTIME_FRAME_ERROR', { subsystem: 'runtime', reason: error?.message || String(error) }); } catch (_) { /* diagnostics unavailable */ }
+}
+const physicsAdvanceCoordinator = SGRA.Runtime.PhysicsAdvanceCoordinator.createPhysicsAdvanceCoordinator({
+  clock: simulationClock,
+  physicsCore: SGRA.Physics.LocalJsPhysicsCore,
+  checkCaptures: () => SGRA.Physics.LocalIntegrator.checkCaptures(),
+  checkPericentre: () => SGRA.Physics.LocalIntegrator.checkPericentre(),
+  consumePhysicsEvents,
+  recordFinalTrailSample: source => recordTrailSamplesForCurrentState(source),
+  onError: reportFrameLoopError
+});
+const runtimeRefreshCoordinator = SGRA.Runtime.RuntimeRefreshCoordinator.createRuntimeRefreshCoordinator({
+  bodies,
+  clock: simulationClock,
+  simulationOptions,
+  selectionState,
+  predictionDisplayState,
+  orbitCache: orbitCacheOwner,
+  displayOptions,
+  launchMode: () => intruders.isLaunchMode(),
+  groupFollowAnchor: () => followGroupDisplayState.active ? followGroupDisplayState.anchor() : null,
+  cameraFollow: (tx, ty, tz) => {
+    if (followGroupDisplayState.active && followGroupDisplayState.anchor()) {
+      updateGroupFollowCamera(performance.now());
+    } else {
+      const target = { tx, ty, tz };
+      cameraController.followTarget(target.tx, target.ty, target.tz, .15);
+    }
+  },
+  computeFuturePath,
+  predictionNeedsRefresh,
+  shouldReplacePredictionPath,
+  renderFrame,
+  updateHud: () => { updateHUD(); updateViewModeBadge(); },
+  now: () => performance.now(),
+  constants: { PRED_INTERVAL },
+  onError: reportFrameLoopError,
+  telemetry: b0PerfTelemetry
+});
+function runLiveSci02AfterPhysics() { return []; } /* WORKBENCH_SCI02_RUNTIME_STRIPPED */
+const runtimeLoop = SGRA.Runtime.RuntimeLoopController.createRuntimeLoopController({
+  clock: simulationClock,
+  options: simulationOptions,
+  advanceCoordinator: physicsAdvanceCoordinator,
+  refreshCoordinator: runtimeRefreshCoordinator,
+  requestFrame: callback => requestAnimationFrame(callback),
+  now: () => performance.now(),
+  onError: reportFrameLoopError,
+  telemetry: b0PerfTelemetry,
+  afterPhysics: runLiveSci02AfterPhysics,
+  scheduler: explicitRuntimePorts.scheduler,
+  constants: SGRA.Domain.Constants
+});
+// Deterministic browser benchmark seam. It is query-gated, absent from normal
+// product use, and only exposes the existing reset lifecycle to measurement
+// tooling so repeated samples begin at the same simulation epoch.
+/* WORKBENCH_CLOSE_APPROACH_BENCHMARK_STRIPPED */
+let pinchStartZoom = null;
+let pinchStartZoomMultiplier = null;
+let placementMultiTouch = false;
+function handlePointerDown(data) {
+  if (intruders.isLaunchMode() && data.pointerCount > 1) {
+    placementMultiTouch = true;
+    intruders.cancel();
+    return;
+  }
+  if (data.pointerCount === 1 && !placementMultiTouch) intruders.begin(data.x, data.y, data.pointerCount);
+}
+function handlePointerMove(data) {
+  if (placementMultiTouch || data.pointerCount > 1) return true;
+  return intruders.update(data.x, data.y);
+}
+function handlePointerUp(data){
+  if (placementMultiTouch) {
+    if (data.remainingPointers === 0) placementMultiTouch = false;
+    return;
+  }
+  intruders.complete(data);
+  if(data.remainingPointers<2)pinchStartZoom=null;
+}
+SGRA.Input.CanvasPointerInput.bind(cv, {
+  onPointerDown: handlePointerDown,
+  onPointerMove: handlePointerMove,
+  onPointerUp: handlePointerUp,
+  onCancel: data => { intruders.cancel(); pinchStartZoom=null; if (!data?.remainingPointers) placementMultiTouch=false; },
+  onRotate: (dx, dy) => { orbitPlaneView.transitioning = false; recenterView.transitioning = false; if (applyGroupFollowRotate(dx, dy)) return; cameraController.rotateBy(dx, dy); cameraViewState.noteManualCameraChange(); },
+  onPinchStart: () => { pinchStartZoom=cameraController.getCameraSnapshot().dist; pinchStartZoomMultiplier=groupFollowZoomState.multiplier; },
+  onPinch: scale => { if (intruders.isLaunchMode()) return; recenterView.transitioning = false; if (followGroupDisplayState.active) { if (pinchStartZoomMultiplier !== null) { groupFollowZoomState.multiplier = Math.min(4, Math.max(0.25, pinchStartZoomMultiplier * scale)); cameraViewState.noteManualCameraChange(); } } else if (pinchStartZoom !== null) { cameraController.setZoom(pinchStartZoom * scale); cameraViewState.noteManualCameraChange(); } },
+  onTwist: delta => { if (intruders.isLaunchMode()) return; orbitPlaneView.transitioning = false; recenterView.transitioning = false; const snapshot = cameraController.getCameraSnapshot(); cameraController.setOrientation(snapshot.yaw - delta, snapshot.pitch); cameraViewState.noteManualCameraChange(); },
+  onZoom: delta => { recenterView.transitioning = false; if (!applyGroupFollowZoomFactor(Math.pow(1.0015, delta))) { cameraController.zoomBy(delta); cameraViewState.noteManualCameraChange(); } }
+});
+function selectAt(sx,sy){
+  let best=-1,bd=1e9;
+  for(let i=0;i<bodies.length;i++){
+    const[bx,by,bz]=toBH(bodies[i].x,bodies[i].y,bodies[i].z);
+    const s=projectBH(bx,by,bz);if(!s)continue;
+    const d=Math.hypot(s[0]-sx,s[1]-sy),hitR=bodies[i].bh?42:22;
+    if(d<hitR&&d<bd){bd=d;best=i;}
+  }
+  if(best>0){const body=bodies[best];if(body.intr&&best===selectionState.getFollowIndex()&&!followGroupDisplayState.active){uiActions.clearSelectedIntruder();}else{selectionState.setFollowIndex(best);showCard();updateHUD();updateObjectList();}}
+  else if(best===0){selectionState.clear();orbitPlaneView.transitioning=false;cameraController.resetTarget();hideCard();updateObjectList();}
+  else{selectionState.clear();orbitPlaneView.transitioning=false;hideCard();updateObjectList();}
+}
+function showCard(){const card=document.getElementById('card');card.classList.add('show');card.classList.remove('pdom-collapsed');}
+function hideCard(){const card=document.getElementById('card');card.classList.remove('show');card.classList.add('pdom-collapsed');}
+const $=id=>document.getElementById(id);
+function setToggle(btn,on){btn.classList.toggle('on',on);btn.setAttribute('aria-pressed',String(on));}
+const intruderFormFieldIds = ['intruderMassInput','launchP0X','launchP0Y','launchP0Z','launchP1X','launchP1Y','launchP1Z'];
+let intruderSummaryAnnounceTO = 0;
+function readIntruderNumber(id) {
+  const raw = $(id).value.trim();
+  return raw === '' ? NaN : Number(raw);
+}
+function intruderFormValues() {
+  const values = Object.fromEntries(intruderFormFieldIds.map(id => [id, readIntruderNumber(id)]));
+  const bad = intruderFormFieldIds.find(id => !Number.isFinite(values[id]) || (id === 'intruderMassInput' && (values[id] < 0.001 || values[id] > 1e5)));
+  return { values, bad };
+}
+function intruderFieldError(id, value) {
+  if (!Number.isFinite(value)) return 'Enter a finite number.';
+  if (id === 'intruderMassInput' && (value < 0.001 || value > 1e5)) return 'Enter a mass from 0.001 through 100000 solar masses.';
+  return '';
+}
+function intruderErrorNode(id) { return $(`${id === 'intruderMassInput' ? 'intruderMass' : id}Error`); }
+function setIntruderFieldValidation(bad) {
+  for (const id of intruderFormFieldIds) {
+    const input = $(id), error = intruderErrorNode(id);
+    const message = id === bad ? intruderFieldError(id, readIntruderNumber(id)) : '';
+    input.setAttribute('aria-invalid', message ? 'true' : 'false');
+    if (error) error.textContent = message;
+  }
+  $('intruderFormError').textContent = bad ? intruderErrorNode(bad).textContent : '';
+}
+function intruderLaunchSummary(values) {
+  const p0 = [values.launchP0X, values.launchP0Y, values.launchP0Z];
+  const p1 = [values.launchP1X, values.launchP1Y, values.launchP1Z];
+  const velocity = SGRA.Intruders.BodyFactory.launchVelocity(p0, p1, LAUNCH_SCALE);
+  const distance = Math.hypot(...p1);
+  const speed = Math.hypot(...velocity);
+  const radialDot = p1[0] * velocity[0] + p1[1] * velocity[1] + p1[2] * velocity[2];
+  const direction = distance === 0 ? 'undefined at Sagittarius A star' : radialDot > 1e-9 ? 'away' : radialDot < -1e-9 ? 'toward' : 'across';
+  const summary = `Mass ${values.intruderMassInput.toFixed(3).replace(/\.000$/, '')} solar masses; initial distance from Sagittarius A star ${distance.toFixed(3)} astronomical units; derived speed ${ (speed * KMS).toFixed(2) } km/s; fraction of c ${(speed / C_AUYR).toFixed(6)} c; initial direction relative to Sagittarius A star: ${direction}.`;
+  const precision = `Precision only: initial velocity vector (${velocity.map(value => value.toFixed(6)).join(', ')}) AU/yr.`;
+  return { summary, precision, velocity, distance, speed, direction };
+}
+function updateIntruderFormSummary() {
+  const { values, bad } = intruderFormValues();
+  if (bad) {
+    $('intruderLaunchSummary').textContent = 'Enter valid values to calculate the factual launch summary.';
+    $('intruderLaunchVector').textContent = '';
+    return null;
+  }
+  const result = intruderLaunchSummary(values);
+  $('intruderLaunchSummary').textContent = result.summary;
+  $('intruderLaunchVector').textContent = result.precision;
+  return result;
+}
+function scheduleIntruderSummaryAnnouncement(delay = 500) {
+  clearTimeout(intruderSummaryAnnounceTO);
+  intruderSummaryAnnounceTO = setTimeout(() => {
+    const result = updateIntruderFormSummary();
+    if (result) announceStatus(`Configure intruder: ${result.summary}`);
+  }, delay);
+}
+let intruderFormReturnFocus = null;
+let intruderFormFallbackActive = false;
+function intruderFormFocusableElements() {
+  const panel = $('intruderFormPanel');
+  if (!panel) return [];
+  return [...panel.querySelectorAll('button, input, select, textarea, [href], [tabindex]:not([tabindex="-1"])')]
+    .filter(element => !element.disabled && !element.hidden && element.getAttribute('aria-hidden') !== 'true');
+}
+function trapIntruderFormFallbackFocus(event) {
+  if (!intruderFormFallbackActive || event.key !== 'Tab') return;
+  const focusable = intruderFormFocusableElements();
+  if (!focusable.length) return;
+  const first = focusable[0], last = focusable[focusable.length - 1];
+  if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+  else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+}
+function openIntruderForm(event) {
+  intruderFormReturnFocus = event?.currentTarget || document.activeElement;
+  const panel = $('intruderFormPanel');
+  if (typeof panel.showModal === 'function') { intruderFormFallbackActive = false; if (!panel.open) panel.showModal(); }
+  else { intruderFormFallbackActive = true; panel.hidden = false; panel.setAttribute('open', ''); }
+  setIntruderFieldValidation(null); updateIntruderFormSummary(); $('intruderMassInput').focus();
+}
+function closeIntruderForm() {
+  clearTimeout(intruderSummaryAnnounceTO);
+  const panel = $('intruderFormPanel');
+  if (typeof panel.close === 'function' && panel.open) panel.close();
+  else { panel.removeAttribute('open'); panel.hidden = true; }
+  intruderFormFallbackActive = false;
+  setIntruderFieldValidation(null);
+  const target = intruderFormReturnFocus; intruderFormReturnFocus = null;
+  if (target && document.contains(target) && typeof target.focus === 'function') setTimeout(() => { if (document.contains(target)) target.focus(); }, 0);
+}
+function submitIntruderForm(event) {
+  event.preventDefault();
+  const { values, bad } = intruderFormValues();
+  setIntruderFieldValidation(bad);
+  if (bad) { $(bad).focus(); announceStatus(`Configure intruder validation: ${intruderErrorNode(bad).textContent}`, STATUS_PRIORITY.VALIDATION, STATUS_CATEGORY.VALIDATION); return; }
+  let body;
+  try {
+    body = intruderLaunch.launch([values.launchP0X, values.launchP0Y, values.launchP0Z], [values.launchP1X, values.launchP1Y, values.launchP1Z], values.intruderMassInput);
+  } catch (error) {
+    if (error?.code !== 'INTRUDER_START_INSIDE_CAPTURE_BOUNDARY') throw error;
+    const message = error.message;
+    $('intruderFormError').textContent = message;
+    $('launchP1X').setAttribute('aria-invalid', 'true');
+    $('launchP1X').focus();
+    announceStatus(message, STATUS_PRIORITY.VALIDATION, STATUS_CATEGORY.VALIDATION);
+    return;
+  }
+  selectionState.setFollowIndex(bodies.indexOf(body));
+  populateStarSel(); updateObjectList(); updateHUD(); closeIntruderForm();
+  toast(`${body.star ? '★ star' : 'IMBH'} ${fmtM(body.m)} launched · selected/followed`);
+}
+
+let scenarioController;
+function populateStarSel(...args) { return scenarioController?.populateStarSel(...args); }
+function scenarioValidationOptions(...args) { return scenarioController?.scenarioValidationOptions(...args); }
+function applyIntruderPreset(...args) { return scenarioController?.applyIntruderPreset(...args); }
+function renderScenarioCatalogue(...args) { return scenarioController?.renderScenarioCatalogue(...args); }
+function selectedScenario(...args) { return scenarioController?.selectedScenario(...args); }
+function setScenarioCatalogue(...args) { return scenarioController?.setScenarioCatalogue(...args); }
+function applySelectedScenario(...args) { return scenarioController?.applySelectedScenario(...args); }
+function loadScenarioCatalogueFile(...args) { return scenarioController?.loadScenarioCatalogueFile(...args); }
+function syncIntegratorModeUi() {
+  const active = simulationOptions.getIntegratorComposition();
+  const requested = simulationOptions.getRequestedIntegratorComposition();
+  const pending = simulationOptions.getPendingIntegratorComposition();
+  const fidelityMode = simulationOptions.getFidelityMode();
+  const label = value => value === 'yoshida4_trial' ? 'high precision' : 'fast';
+  const effective = simulationOptions.getEffectiveIntegratorComposition();
+  const unsupportedNow = !simulationOptions.isIntegratorCompositionEffective(active, fidelityMode);
+  let text;
+  if (pending) text = `pending reset: ${label(requested)}`;
+  else if (unsupportedNow) text = `requested: ${label(requested)} / active: ${label(effective)} — unavailable with Adaptive Kerr`;
+  else text = `active: ${label(active)}`;
+  const desktop = $('sIntegratorMode');
+  const mobile = $('sIntegratorModeM');
+  const output = $('oIntegratorMode');
+  if (desktop) {
+    desktop.value = requested;
+    desktop.title = pending ? 'Selected mode will apply on the next reset.' : (unsupportedNow ? 'High precision is not available under Adaptive Kerr; running Fast instead.' : 'Current active integrator mode.');
+  }
+  if (mobile) mobile.value = requested;
+  if (output) output.textContent = text;
+  const mobileOutput = $('oIntegratorModeM');
+  if (mobileOutput) mobileOutput.textContent = text;
+}
+function syncFidelityUi() {
+  const mode = simulationOptions.getFidelityMode();
+  const spin = Number(blackHoleModelState.get('spinMagnitude')) || 0;
+  const labels = {
+    newtonian: spin > 0 ? 'Newtonian (spin inactive)' : 'Newtonian',
+    '1pn': spin > 0 ? '1PN + Lense–Thirring' : '1PN',
+    adaptive_kerr: 'Adaptive Kerr'
+  };
+  const text = labels[mode] || mode;
+  for (const id of ['sFidelity', 'sFidelityM', 'sFidelitySandboxM']) { const select = $(id); if (select) select.value = mode; }
+  for (const id of ['oFidelityStatus', 'oFidelityStatusM', 'oFidelitySandboxStatusM']) { const out = $(id); if (out) out.textContent = text; }
+  const readout = $('rGR');
+  if (readout) readout.textContent = `Requested: ${text}; active treatment in selected-body ownership`;
+  const summary = $('forceModelSummaryLabel');
+  if (summary) summary.textContent = mode === 'adaptive_kerr' ? 'ADAPTIVE N -> KERR' : mode === '1pn' ? 'CENTRAL 1PN' : 'CENTRAL NEWTONIAN';
+  const spinEnabled = mode !== 'newtonian';
+  for (const id of ['sSpinAStar', 'sSpinAStarM', 'sSpinAStarSandboxM', 'bSpinMesh', 'bSpinMeshM']) {
+    const control = $(id);
+    if (!control) continue;
+    control.disabled = !spinEnabled;
+    control.setAttribute('aria-disabled', String(!spinEnabled));
+    control.title = spinEnabled ? (id.startsWith('bSpinMesh') ? 'Prototype frame-dragging mesh' : 'Sgr A* spin magnitude (a*)') : 'Spin has no effect in Newtonian mode.';
+  }
+}
+function sandboxSessionDirty() {
+  if (applicationModeController.getMode() !== 'sandbox') return false;
+  return bodies.length !== 1
+    || Math.abs(simulationClock.getSimTime()) > 1e-12
+    || intruders.isLaunchMode()
+    || selectionState.getFollowIndex() !== -1
+    || followGroupDisplayState.active;
+}
+function resetSceneForMode(mode) {
+  // Any scene rebuild ends the applied-scenario reset authority; applyScenario()
+  // re-establishes it after its own rebuild completes.
+  scenarioController?.clearAppliedScenario?.();
+  window.SGRA_SPIN_DIAG?.setAxisSign(1);
+  const resetButton = document.getElementById('bReset');
+  if (resetButton) resetButton.title = `Reset to epoch ${EPOCH0} (R)`;
+  // Stop continuous sound before the body list is torn
+  // down, not after -- the eligibility re-check at the end of
+  // updateObjectList() below is a second, redundant safety net, not the
+  // only guard.
+  sonificationContinuousObserver?.stop?.();
+  sonificationAudioAuthority?.stopContinuous?.();
+  followGroupDisplayState.stop();
+  init(mode);
+  predictionDisplayState.clearFollowedPath();
+  intruders.cancel();
+  intruders.setLaunchMode(false);
+  if (typeof uiActions !== 'undefined') uiActions.cancelLaunch();
+  intruderLaunch.resetSequence();
+  pinchStartZoom = null;
+  cv.classList.remove('aiming');
+  orbitPlaneView.transitioning = false;
+  cameraController.reset();
+  cameraViewState.reset();
+  hideCard();
+  if (mode === 'sandbox') simulationClock.setPlaying(false);
+  else if (!simulationClock.isPlaying()) simulationClock.setPlaying(true);
+  sonificationController?.syncSimulationPlayback?.(simulationClock.isPlaying());
+  populateStarSel();
+  syncIntegratorModeUi();
+  updateObjectList();
+  updateHUD();
+  uiActions.syncPlayUi?.(simulationClock.isPlaying());
+  // A1-03: this rebuild reset the spin axis sign to +1 above; repaint the
+  // spin readout so a previously retrograde label cannot outlive its state.
+  uiActions.syncSpinUi?.();
+}
+function syncApplicationModeUi() {
+  const mode = applicationModeController.getMode();
+  const sandbox = mode === 'sandbox';
+  const label = $('modeLabel');
+  const notice = $('modeNotice');
+  if (label) label.textContent = sandbox ? 'Sandbox' : 'Explore';
+  if (notice) notice.hidden = !sandbox;
+  const wordmarkSub = $('wordmarkSub');
+  if (wordmarkSub) wordmarkSub.firstChild.textContent = sandbox ? 'controlled experiment · Sgr A* only · ' : 's-star cluster · 4.30×10⁶ M☉ · Gillessen+2017 · ';
+  for (const id of ['bEnterSandbox', 'bEnterSandboxM']) { const button = $(id); if (button) button.hidden = sandbox; }
+  for (const id of ['bReturnExplore', 'bReturnExploreM']) { const button = $(id); if (button) button.hidden = !sandbox; }
+  for (const id of ['mobileExperimentSection', 'mobileSandboxExperimentSection']) { const element = $(id); if (element) element.hidden = sandbox ? id === 'mobileExperimentSection' : id === 'mobileSandboxExperimentSection'; }
+  for (const id of ['starSel', 'starSelM', 'sQual', 'sQualM', 'exploreFieldDensityControl', 'mobileFieldDensityLabel', 'bLeg', 'bLegM', 'bConfigureIntruderM', 'bLaunchM', 'mobileDisplaySpinControl', 'mobileDisplayPhysicsControls', 'mobileDisplayIntruderControls']) {
+    const element = $(id); if (element) element.hidden = sandbox;
+  }
+  for (const id of ['bLaunch', 'bLaunchSandboxM']) { const button = $(id); if (button) button.hidden = !sandbox && id === 'bLaunchSandboxM'; }
+  document.body.dataset.applicationMode = mode;
+  uiActions?.syncPlayUi?.(simulationClock.isPlaying());
+}
+// A1-01: display toggles are bound one-way (click -> action -> paint), so
+// without this the initial pressed state of every toggle came from static
+// markup, not from DisplayOptions/SimulationOptions. Paint every toggle from
+// its runtime authority at startup so markup can never silently disagree.
+function syncDisplayToggleUi() {
+  const pairs = [
+    [displayOptions.showOrbits(), ['bOrbits', 'bOrbitsM']],
+    [displayOptions.showTrails(), ['bTrails', 'bTrailsM']],
+    [displayOptions.showLabels(), ['bLabels', 'bLabelsM']],
+    [displayOptions.showGlow(), ['bGlow', 'bGlowM']],
+    [displayOptions.showScientificAnnotations(), ['bScientificAnnotations', 'bScientificAnnotationsM']],
+    [displayOptions.showDisc(), ['bDisc', 'bDiscM']],
+    [displayOptions.showSpinMesh(), ['bSpinMesh', 'bSpinMeshM']],
+    [simulationOptions.isCuspEnabled(), ['bCusp', 'bCuspM']]
+  ];
+  for (const [on, ids] of pairs) for (const id of ids) { const button = $(id); if (button) setToggle(button, on); }
+}
+function syncCalmMotionUi() {
+  const enabled = calmMotionEnabled();
+  for (const id of ['bCalmMotion', 'bCalmMotionM']) {
+    const button = $(id);
+    if (!button) continue;
+    button.textContent = `calm motion: ${enabled ? 'on' : 'off'}`;
+    button.setAttribute('aria-pressed', String(enabled));
+    button.title = enabled ? 'Camera transitions settle immediately; system default or user preference' : 'Camera transitions use the normal animation timing';
+  }
+}
+let sonificationController = null;
+function syncSonificationUi(...args) { return sonificationController?.syncSonificationUi?.(...args); }
+function syncContinuousEligibility(...args) { return sonificationController?.syncContinuousEligibility?.(...args); }
+function toggleSonification(...args) { return sonificationController?.toggleSonification?.(...args); }
+function toggleContinuousChannels(...args) { return sonificationController?.toggleContinuousChannels?.(...args); }
+function toggleContinuousPauseResume(...args) { return sonificationController?.toggleContinuousPauseResume?.(...args); }
+function toggleSonificationSpeakEvents(...args) { return sonificationController?.toggleSonificationSpeakEvents?.(...args); }
+function playSonificationLegend(...args) { return sonificationController?.playSonificationLegend?.(...args); }
+function setSonificationPitchRange(...args) { return sonificationController?.setSonificationPitchRange?.(...args); }
+function setSonificationSpeechRate(...args) { return sonificationController?.setSonificationSpeechRate?.(...args); }
+function setSpeechRate(...args) { return setSonificationSpeechRate(...args); }
+const STATUS_PRIORITY = SGRA.UI.StatusAnnouncer.STATUS_PRIORITY;
+const STATUS_CATEGORY = SGRA.UI.StatusAnnouncer.STATUS_CATEGORY;
+let sonificationArbitration = null;
+const statusAnnouncer = SGRA.UI.StatusAnnouncer.create({
+  $, simulationClock, surfaceIsOpen, document,
+  getSonificationArbitration: () => sonificationArbitration,
+  now: () => performance.now()
+});
+const { announceStatus, toast } = statusAnnouncer;
+window.toast = toast;
+const applicationModeController = SGRA.App.ApplicationMode.createApplicationMode({
+  isSandboxDirty: sandboxSessionDirty,
+  resetForMode: resetSceneForMode,
+  onChanged: syncApplicationModeUi
+});
+const presentationCommands = Object.freeze({
+  setFollowBody: (...args) => uiActions.setFollowBody(...args),
+  addGroupMember: (...args) => uiActions.addGroupMember(...args),
+  removeGroupMember: (...args) => uiActions.removeGroupMember(...args)
+});
+const scenarioCommands = Object.freeze({
+  followGroup: (...args) => uiActions.followGroup(...args),
+  setFidelityMode: (...args) => uiActions.setFidelityMode(...args),
+  setSpinAStar: (...args) => uiActions.setSpinAStar(...args)
+});
+presentationController = SGRA.UI.PresentationController.create({
+  $, document, getBodies: () => bodies, getApplicationMode: () => applicationModeController.getMode(),
+  simulationClock, simulationOptions, transientEffects, getCamera: () => cameraController.getCameraSnapshot(),
+  getFocalLength: () => F, schwarzschildRadius: RS, bodyStore, selectionState,
+  oscElements, relativityState, relWeight, weightCol, weightPos, uiElements,
+  hudViewModel: SGRA.UI.HudViewModel, hudView: SGRA.UI.HudView,
+  followGroupDisplayState, intruders, interactionCommands: presentationCommands,
+  showCard, hideCard, announceStatus, statusPriority: STATUS_PRIORITY,
+  statusCategory: STATUS_CATEGORY, cameraViewState, syncContinuousEligibility,
+  epoch0: EPOCH0, populateStarSel
+});
+scenarioController = SGRA.Scenarios.ScenarioController.create({
+  $, document, stars: SSTARS, getBodies: () => bodies, bodyStore, trailState, simulationClock,
+  simulationOptions, blackHoleModelState, getSpinAxisSign: () => spinAxisSignDiagnostic,
+  selectionState, followGroupDisplayState, intruders, intruderLaunch, applicationModeController,
+  resetSceneForMode, syncApplicationModeUi, enforcePinnedBHFrame,
+  computeAccel: () => SGRA.Physics.LocalIntegrator.computeAccel(),
+  updateObjectList, updateHUD, setIntruderFieldValidation, updateIntruderFormSummary,
+  announceStatus, toast, scenarioCommands,
+  getApplicationModeName: () => applicationModeController.getMode(), maxTier: TIER.length - 1,
+  syncRuntimeControls: () => {
+    syncIntegratorModeUi();
+    uiActions.syncSpinUi?.();
+    const resetButton = $('bReset');
+    if (resetButton) resetButton.title = 'Reset to the applied scenario start (R)';
+    const tier = String(simulationOptions.getRequestedTier());
+    for (const id of ['sQual', 'sQualM']) { const select = $(id); if (select) select.value = tier; }
+  }
+});
+const uiActions = SGRA.UI.UIActions.create({
+  document, selectionState, orbitPlaneView, hideCard, announceStatus, updateHUD, updateObjectList,
+  bodies, followGroupDisplayState, bodyStore, orbitCacheOwner, trailSampler: TrailSampler, predictionDisplayState,
+  surfaceIsOpen, $, updateSelectedInspector, restoreObjectsAfterGroupFollow, groupFramingState,
+  resetGroupFollowCamera, intruders, recenterView, displayOptions, simulationClock, simulationOptions,
+  physicsAdvanceCoordinator, predictionEngine: PredictionEngine, syncFidelityUi, syncIntegratorModeUi, toast,
+  motionPreference, calmMotionEnabled, syncCalmMotionUi, blackHoleModelState,
+  maxValidatedKerrSpin: MAX_VALIDATED_KERR_SPIN, invalidateForceState, startOrbitPlaneViewTransition, cv, setToggle,
+  epoch0: EPOCH0, appliedScenario: () => scenarioController?.appliedScenario?.(), applyScenario: (...args) => scenarioController?.applyScenario?.(...args), resetSceneForMode, getApplicationMode: () => applicationModeController.getMode(),
+  sandboxSessionDirty, cameraController, cameraViewState, currentFollowBody,
+  startRecenteringTransition, collapseObjectsForGroupFollow, groupStatusText,
+  applyGroupFollowRotate, applyGroupFollowZoomFactor, applicationModeController,
+  syncApplicationModeUi, syncSonificationPlayback: playing => sonificationController?.syncSimulationPlayback?.(playing), diagnostics: window.SGRA_DIAG, actionFailureBoundary: SGRA.UI.ActionFailureBoundary.create({
+    reportFailure: ({ actionName, error, phase }) => {
+      const reason = error?.message || String(error);
+      announceStatus(`Interface action failed: ${actionName}.`);
+      window.SGRA_DIAG?.markRuntimeFailure?.('UI_ACTION_FAILED', { subsystem: 'ui', actionName, phase, reason });
+    }
+  }),
+  incrementPreviewRevision: () => { previewRevision += 1; }
+});
+try {
+  const defaultCatalogue = JSON.parse($('scenarioCatalogueDefault').textContent);
+  setScenarioCatalogue(SGRA.Scenarios.Catalogue.validateCatalogue(defaultCatalogue, scenarioValidationOptions()), 'curated defaults', false);
+} catch (error) {
+  announceStatus(`Scenario catalogue rejected: ${error.message}`);
+}
+for (const id of ['sScenario', 'sScenarioM']) $(id)?.addEventListener('change', () => {
+  const scenario = selectedScenario();
+  for (const otherId of ['sScenario', 'sScenarioM']) { const other = $(otherId); if (other && scenario) other.value = scenario.id; }
+  renderScenarioCatalogue();
+});
+for (const id of ['scenarioCatalogueFile', 'scenarioCatalogueFileM']) $(id)?.addEventListener('change', event => loadScenarioCatalogueFile(event.target.files?.[0]));
+for (const id of ['bApplyScenario', 'bApplyScenarioM']) $(id)?.addEventListener('click', applySelectedScenario);
+$('intruderPresetSelect')?.addEventListener('change', event => applyIntruderPreset(event.target.value));
+$('bSceneSummary').addEventListener('click', announceSceneSummary);
+$('bObjects').addEventListener('click', () => toggleSurface('objectListPanel', 'bObjects', 'objectListHeading'));
+$('bRuntimeStatus').addEventListener('click', () => toggleSurface('runtimeTruthPanel', 'bRuntimeStatus', 'runtimeTruthHeading'));
+$('bRuntimeStatusM').addEventListener('click', () => toggleSurface('runtimeTruthPanel', 'bRuntimeStatusM', 'runtimeTruthHeading'));
+$('bFollowGroup').addEventListener('click', uiActions.followGroup);
+$('bStopGroupFollow').addEventListener('click', uiActions.stopGroupFollow);
+$('bGroupStatus')?.addEventListener('click', uiActions.groupStatus);
+$('bCalmMotion').addEventListener('click', uiActions.toggleCalmMotion);
+$('bCalmMotionM').addEventListener('click', uiActions.toggleCalmMotion);
+$('bSonification').addEventListener('click', toggleSonification);
+$('bSonificationM').addEventListener('click', toggleSonification);
+$('sSonificationGain').addEventListener('input', event => {
+  SGRA.Sonification?.Settings?.setMasterGain?.(event.target.value);
+  syncSonificationUi();
+});
+$('sSonificationGainM').addEventListener('input', event => {
+  SGRA.Sonification?.Settings?.setMasterGain?.(event.target.value);
+  syncSonificationUi();
+});
+for (const id of ['sPitchRange', 'sPitchRangeM']) {
+  $(id)?.addEventListener('change', event => setSonificationPitchRange(event.target.value));
+}
+$('bContinuousChannels').addEventListener('click', toggleContinuousChannels);
+$('bContinuousChannelsM').addEventListener('click', toggleContinuousChannels);
+$('bContinuousPauseResume').addEventListener('click', toggleContinuousPauseResume);
+$('bContinuousPauseResumeM').addEventListener('click', toggleContinuousPauseResume);
+$('bSonificationLegend').addEventListener('click', playSonificationLegend);
+$('bSonificationLegendM').addEventListener('click', playSonificationLegend);
+$('bSonificationSpeakEvents').addEventListener('click', toggleSonificationSpeakEvents);
+$('bSonificationSpeakEventsM').addEventListener('click', toggleSonificationSpeakEvents);
+for (const id of ['sSpeechRate', 'sSpeechRateM']) $(id)?.addEventListener('change', event => setSpeechRate(event.target.value));
+$('intruderForm').addEventListener('submit', submitIntruderForm);
+for (const id of intruderFormFieldIds) {
+  $(id).addEventListener('input', () => { updateIntruderFormSummary(); scheduleIntruderSummaryAnnouncement(); });
+  $(id).addEventListener('blur', () => scheduleIntruderSummaryAnnouncement(0));
+  $(id).addEventListener('wheel', event => {
+    if (document.activeElement === event.currentTarget) event.preventDefault();
+  }, { passive: false });
+}
+for (const id of ['bConfigureIntruder','bConfigureIntruderM','bConfigureIntruderSandboxM']) $(id)?.addEventListener('click', openIntruderForm);
+$('bCancelIntruderForm').addEventListener('click', closeIntruderForm);
+$('bFreeView').addEventListener('click', uiActions.freeView); $('bFreeViewM').addEventListener('click', uiActions.freeView);
+$('bRemoveSelectedIntruder').addEventListener('click', uiActions.removeSelectedIntruder);
+const MODE_BUTTON_COUNTERPART = { bEnterSandbox: 'bReturnExplore', bReturnExplore: 'bEnterSandbox' };
+function keepFocusAcrossModeSwitch(id) {
+  // The activating button is hidden by the mode switch; move focus to its
+  // counterpart in the same place so keyboard users do not land on <body>.
+  const next = $(MODE_BUTTON_COUNTERPART[id]);
+  const source = $(id);
+  if (next && !next.hidden && source?.hidden && (document.activeElement === document.body || document.activeElement === source)) next.focus();
+}
+for (const id of ['bEnterSandbox', 'bEnterSandboxM']) $(id)?.addEventListener('click', () => { uiActions.enterSandbox(); if (id.endsWith('M')) uiActions.closeMobilePanel(); else keepFocusAcrossModeSwitch(id); });
+for (const id of ['bReturnExplore', 'bReturnExploreM']) $(id)?.addEventListener('click', () => { uiActions.returnToExplore(); if (id.endsWith('M')) uiActions.closeMobilePanel(); else keepFocusAcrossModeSwitch(id); });
+let lastFocused = null;
+document.addEventListener('focusin', e => { if (e.target !== document.body) lastFocused = e.target; });
+document.addEventListener('focusout', e => { if (e.target !== document.body) lastFocused = e.target; });
+let lastMobileBreakpoint = window.matchMedia('(max-width: 720px)').matches;
+window.addEventListener('resize', () => {
+  const mobile = window.matchMedia('(max-width: 720px)').matches;
+  if (mobile === lastMobileBreakpoint) return;
+  lastMobileBreakpoint = mobile;
+  requestAnimationFrame(() => {
+    const a = document.activeElement;
+    const src = lastFocused;
+    if (!src) return;
+    if (a && a !== document.body && a !== src && a.getClientRects().length) return;
+    const id = src.id || '';
+    const twin = id ? document.getElementById(id.endsWith('M') ? id.slice(0, -1) : id + 'M') : null;
+    const target = [twin, document.getElementById(mobile ? 'bPanel' : 'bPlay')].find(el => el && el.getClientRects().length && !el.closest('details:not([open])'));
+    target?.focus();
+  });
+});
+document.querySelectorAll('#bar details.desktop-drawer').forEach(drawer => drawer.addEventListener('toggle', () => {
+  if (drawer.open) { document.querySelectorAll('#bar details.desktop-drawer').forEach(other => { if (other !== drawer) other.open = false; }); drawer.querySelector('summary')?.focus(); }
+  else if (drawer.contains(document.activeElement)) drawer.querySelector('summary')?.focus();
+}));
+SGRA.UI.DesktopDrawerLayout.install(document, window);
+document.querySelectorAll('#mobilePanelBody details.mobile-section').forEach(section => section.addEventListener('toggle', () => {
+  if (section.open) { document.querySelectorAll('#mobilePanelBody details.mobile-section').forEach(other => { if (other !== section) other.open = false; }); section.querySelector('summary')?.focus(); }
+  else if (section.contains(document.activeElement)) section.querySelector('summary')?.focus();
+}));
+$('intruderFormPanel').addEventListener('keydown', event => {
+  if (event.key === 'Escape' && intruderFormFallbackActive) { event.preventDefault(); closeIntruderForm(); return; }
+  trapIntruderFormFallbackFocus(event);
+});
+$('intruderFormPanel').addEventListener('cancel', event => { event.preventDefault(); closeIntruderForm(); });
+SGRA.UI.ControlBindings.bindControls(document, uiActions);
+const runtimeActions = SGRA.Controllers.RuntimeActions.createRuntimeActions(uiActions);
+// One audio authority owns
+// every page-produced sound; nothing else in this file constructs an
+// AudioContext or references window.speechSynthesis directly (see
+// tests/sonification_boundary.test.mjs). Wired here, after the status
+// seam's priority/category constants and before flushAccessibleStatus()
+// below, which is the single forwarding point into the arbitration
+// service.
+SGRA.Sonification?.Settings?.loadFromLocalStorage?.();
+let sonificationAudioAuthority = null;
+let sonificationContinuousObserver = null;
+let sonificationContinuousEligible = null;
+let sonificationBackendsWired = false;
+// Declared at script scope: this file is strict, so a function declaration
+// inside the block below would be invisible to toggleSonification(), and
+// re-enabling sonification after disabling it would throw a ReferenceError.
+let wireSonificationBackends = null;
+if (SGRA.Sonification?.AudioAuthority) {
+  sonificationAudioAuthority = SGRA.Sonification.AudioAuthority.createAudioAuthority({
+    audioContextFactory: () => new (window.AudioContext || window.webkitAudioContext)(),
+    speechSynthesisFactory: () => window.speechSynthesis
+  });
+  wireSonificationBackends = function wireSonificationBackendsForSession() {
+    // Backends are session-scoped: disable() disposes them, while this
+    // existing page seam recreates them for a later explicit enable. The
+    // authority remains the sole owner of the shared AudioContext.
+    sonificationAudioAuthority.wireBackends({
+      toneBackend: SGRA.Sonification.EventEarconBackend?.createEventEarconBackend({ audioContextFactory: () => sonificationAudioAuthority.getSharedAudioContext(), settings: SGRA.Sonification.Settings }),
+      continuousBackend: SGRA.Sonification.ContinuousChannelBackend?.createContinuousChannelBackend({ audioContextFactory: () => sonificationAudioAuthority.getSharedAudioContext(), settings: SGRA.Sonification.Settings }),
+      spokenEventBackend: SGRA.Sonification.SpokenEventBackend?.createSpokenEventBackend({ speechSynthesisFactory: () => sonificationAudioAuthority.getSharedSpeechSynthesis(), utteranceFactory: text => new SpeechSynthesisUtterance(text), settings: SGRA.Sonification.Settings }),
+      legendBackend: SGRA.Sonification.LegendSpeech?.createLegendSpeech({ speechSynthesisFactory: () => sonificationAudioAuthority.getSharedSpeechSynthesis(), utteranceFactory: text => new SpeechSynthesisUtterance(text), getContracts: () => SGRA.Sonification.MappingContracts?.getContracts() || [], settings: SGRA.Sonification.Settings })
+    });
+    sonificationBackendsWired = true;
+  };
+  wireSonificationBackends();
+  // A thin dispatcher (SON-03): model-event -> speech (ducks continuous
+  // via the authority), everything else -> a UI confirmation tone.
+  // Neither path constructs its own audio; both call back into the one
+  // authority.
+  const sonificationRoute = SGRA.Sonification.Router?.createSonificationRouter({
+    toneBackend: { play: e => sonificationAudioAuthority.playEarcon(e) },
+    spokenBackend: { play: e => sonificationAudioAuthority.speakEvent(e) }
+  });
+  sonificationArbitration = SGRA.Sonification.Arbitration?.createArbitrationService({
+    settings: SGRA.Sonification.Settings,
+    backend: sonificationRoute
+  }) || null;
+  // Eligibility (item B/E): continuous sonification requires one
+  // explicit single followed body and is refused during group follow,
+  // checked fresh on every sample -- not just when the observer starts.
+  sonificationContinuousEligible = function () {
+    const idx = selectionState.getFollowIndex();
+    return !followGroupDisplayState.active && idx > 0 && idx < bodies.length;
+  };
+  sonificationContinuousObserver = SGRA.Sonification.ContinuousChannelObserver?.createContinuousChannelObserver({
+    isEligible: sonificationContinuousEligible,
+    getFollowedBody: () => { const idx = selectionState.getFollowIndex(); return (idx > 0 && idx < bodies.length) ? bodies[idx] : null; },
+    getCentralBody: () => bodies[0] || null,
+    getGravitationalConstant: () => G,
+    getPitchRangeKey: () => SGRA.Sonification.Settings.get().pitchRangeKey,
+    calibration: SGRA.Sonification.Calibration,
+    mapping: SGRA.Sonification.ContinuousChannelMapping,
+    onSample: sample => sonificationAudioAuthority.setContinuousSample(sample)
+  }) || null;
+}
+sonificationController = SGRA.Sonification.SonificationController.create({
+  $, settings: SGRA.Sonification.Settings,
+  getAudioAuthority: () => sonificationAudioAuthority,
+  getContinuousObserver: () => sonificationContinuousObserver,
+  getContinuousEligible: () => typeof sonificationContinuousEligible === 'function' && sonificationContinuousEligible(),
+  getBackendsWired: () => sonificationBackendsWired,
+  setBackendsWired: value => { sonificationBackendsWired = value; },
+  wireBackends: () => wireSonificationBackends?.(),
+  announceStatus, statusPriority: STATUS_PRIORITY, statusCategory: STATUS_CATEGORY
+});
+// Item A: disposing the page stops everything, synchronously, with no
+// dependence on any script elsewhere calling this.
+window.addEventListener('beforeunload', () => { sonificationController?.teardownForLifecycle?.(); });
+statusAnnouncer.initialize();
+syncCalmMotionUi();
+syncDisplayToggleUi();
+syncSonificationUi();
+// State truthfully on load. The button already reads
+// "sonification: off" because Settings.get().enabled is always false
+// immediately after loadFromLocalStorage() -- see sonification_settings.js.
+// This adds the one thing that couldn't be said by the button alone: if
+// preferences exist from an earlier session, say so without implying
+// sound is active.
+if (SGRA.Sonification?.Settings?.hadPersistedPreferences?.()) {
+  for (const id of ['bSonification', 'bSonificationM']) {
+    const button = $(id);
+    if (button) button.title = 'Previous audio preferences restored; activate sonification to start sound.';
+  }
+}
+syncApplicationModeUi();
+function resize(force=false){
+  const nextDpr=Math.min(2,devicePixelRatio||1),nextW=innerWidth,nextH=innerHeight;
+  const nextPixelWidth=nextW*nextDpr,nextPixelHeight=nextH*nextDpr;
+  const unchanged=cv.width===nextPixelWidth&&cv.height===nextPixelHeight&&W===nextW&&H===nextH&&DPR===nextDpr;
+  if(unchanged&&!force)return;
+  DPR=nextDpr;W=nextW;H=nextH;
+  // A lifecycle restore may need a complete redraw even when dimensions are
+  // unchanged. Avoid assigning canvas width/height in that case: it clears
+  // the bitmap and resets the context while path/trail caches remain live.
+  if(!unchanged){
+    cv.width=nextPixelWidth;cv.height=nextPixelHeight;cv.style.width=W+'px';cv.style.height=H+'px';
+    ctx=cv.getContext('2d');
+    if(SGRA.App.context) SGRA.App.context.ctx=ctx;
+  } else if(force){
+    ctx=cv.getContext('2d')||ctx;
+    if(SGRA.App.context) SGRA.App.context.ctx=ctx;
+  }
+  F=1.15*Math.min(W,H);
+  if(force||lastStarfieldWidth!==cv.width||lastStarfieldHeight!==cv.height||lastStarfieldDpr!==DPR){
+    makeStars();
+    lastStarfieldWidth=cv.width;
+    lastStarfieldHeight=cv.height;
+    lastStarfieldDpr=DPR;
+  }
+  viewportState.setSize(W, H, DPR, F);
+}
+cv.addEventListener('keydown', runtimeActions.onCanvasKeydown);
+window.addEventListener('keydown', event => { if (document.getElementById('intruderFormPanel')?.open) return; runtimeActions.onGlobalKeydown(event); });
+window.addEventListener('resize',resize);
+function lifecycleClockResync(){
+  if(typeof simulationClock.resyncRealTime==='function') simulationClock.resyncRealTime(performance.now(), true);
+  else if(typeof simulationClock.syncRealTime==='function') simulationClock.syncRealTime(performance.now(), true);
+}
+function suspendForLifecycle(){
+  sonificationController?.suspendForLifecycle?.();
+  lifecycleClockResync();
+  runtimeLoop.stop();
+}
+function restoreFromLifecycle(){
+  // Some Android 2D canvas implementations do not reliably emit
+  // contextrestored after a page restore. Reacquire the current context here
+  // so recovery does not depend on a contextrestored event.
+  const restoredContext=cv.getContext('2d');
+  if(!restoredContext)return;
+  ctx=restoredContext;
+  if(SGRA.App.context) SGRA.App.context.ctx=ctx;
+  resize(true);
+  lifecycleClockResync();
+  sonificationController?.resumeFromLifecycle?.();
+  if(!runtimeLoop.isRunning()) runtimeLoop.restart();
+}
+document.addEventListener('visibilitychange',()=>{
+  if(document.visibilityState==='hidden')suspendForLifecycle();
+  else restoreFromLifecycle();
+});
+window.addEventListener('pagehide',suspendForLifecycle);
+window.addEventListener('pageshow',restoreFromLifecycle);
+cv.addEventListener('contextlost',event=>{
+  event.preventDefault();
+  suspendForLifecycle();
+});
+cv.addEventListener('contextrestored',()=>{
+  restoreFromLifecycle();
+});
+SGRA.App.bootstrap({ canvasId: 'cv' });
+// Keep the stable status route empty at startup; subsequent user/runtime
+// events use the existing polite announcement path.
+statusAnnouncer.resetStartup();
+updateObjectList();
+updateRuntimeTruth();
+setInterval(updateObjectList, 333);
+// Reconcile the actual startup state instead of assuming a fresh navigation
+// is already visible. Mobile reloads can begin hidden or in a restore phase;
+// starting only after this check prevents a dead first RAF generation while
+// retaining exactly one active loop when the page is visible.
+if(document.visibilityState==='visible'){
+  resize(true);
+  lifecycleClockResync();
+  runtimeLoop.start();
+}else{
+  suspendForLifecycle();
+}
+syncIntegratorModeUi();
+syncFidelityUi();
+</script>
+</body>
+</html>

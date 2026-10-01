@@ -1,4 +1,3 @@
-                    
 # Sgr A* Non-Commercial Source Licence v1.0
 
 **Version 1.0 — 22 September 2026**
@@ -7,275 +6,504 @@
 
 ## 1. Purpose
 
-This licence permits the Sgr A* Simulator software to be studied, used, tested, modified and shared for genuine non-commercial purposes while preserving the authorship, provenance and non-commercial status of the original work.
+This licence permits the Sgr A* Simulator to be studied, used, tested, modified, demonstrated and shared for genuine non-commercial purposes while preserving the authorship, provenance and non-commercial status of the original work.
 
-Commercial exploitation of the Software, whether direct or indirect, is not permitted without a separate written commercial licence from the Copyright Holder.
+The project is intended to support learning, teaching, student development, academic and scientific research, public engagement and non-commercial experimentation.
 
-The fact that access to the Software is provided without charge does not, by itself, make a use non-commercial.
+Commercial exploitation of the Software, whether direct or indirect, is not permitted without a separate written licence from the Copyright Holder.
+
+Providing the Software without charge does not, by itself, make a use non-commercial.
 
 ## 2. Definitions
 
 For the purposes of this licence:
 
-**“Software”** means the Sgr A* Simulator source code, executable or browser-delivered code, scripts, original user-interface code, original project documentation, configuration files and other original materials distributed with this licence.
+**“Software”** means the original source code, executable or browser-delivered code, scripts, user-interface code, configuration files and other original software material created for the Sgr A* Simulator and distributed by the Copyright Holder under this licence.
 
-**“Copyright Holder”** means Mark Hurrell in relation to original material for which he owns the copyright.
+**“Project Content”** means original project documentation, explanatory text, original graphics, original reference material and other non-software material that is expressly distributed under this licence.
+
+**“Covered Material”** means the Software and any Project Content expressly distributed under this licence.
+
+Covered Material does **not** include third-party libraries, dependencies, assets, code, data or other material merely packaged, linked, referenced or distributed with the project. Third-party material remains governed by its own licence.
+
+**“Copyright Holder”** means Mark Hurrell in relation to material for which he owns, or is authorised to license, the relevant rights.
 
 **“You”** means the individual or legal entity exercising rights under this licence.
 
-**“Modified Work”** means any work containing, modifying, adapting, translating, extending or otherwise deriving from any copyrightable part of the Software.
+**“Modified Work”** means a work that modifies, adapts, translates, extends or otherwise derives from copyrightable expression contained in Covered Material.
 
-**“Commercial Use”** means any use that is undertaken for, connected with, intended to obtain, or results in commercial advantage, monetary compensation, revenue, financial return or other material commercial benefit, whether directly or indirectly.
+**“Commercial Use”** means use undertaken for, on behalf of, or primarily directed toward obtaining commercial advantage, revenue, monetary compensation, business benefit or another material commercial benefit.
 
-Commercial Use includes use by or on behalf of a commercial organisation where the use contributes to that organisation's activities or interests, even when no separate charge is made for the Software.
+A use does not become Commercial Use merely because it later has an incidental, unforeseen or remote beneficial consequence.
 
-**“Non-Commercial Use”** means use undertaken genuinely without direct or indirect commercial purpose, commercial advantage, revenue generation or material financial benefit.
+**“Non-Commercial Use”** means use undertaken without a commercial purpose or intended commercial advantage, including the educational, academic and research activities expressly permitted by this licence.
 
-## 3. Permitted Uses
+**“Generated Output”** means an image, animation, plot, numerical result, simulation result, recording, export or other material produced through operation of the Software.
+
+**“Corresponding Source”** means the preferred source form and associated material reasonably necessary to understand, modify and build the version of the Software or Modified Work being provided or operated.
+
+## 3. General Permission
 
 Subject to all conditions of this licence, You may:
 
-a. run and use the Software for personal purposes;
+a. run the Software for personal and private purposes;
 
-b. study and inspect the source code;
+b. inspect and study its source code;
 
-c. use the Software for private experimentation and learning;
+c. use it for learning, experimentation and hobby activity;
 
-d. use the Software for teaching and education where the Software itself is not being commercially exploited;
+d. use it for genuine academic, scientific and educational purposes as permitted by Section 4;
 
-e. use the Software for genuine non-commercial academic or scientific research;
+e. demonstrate the Software for permitted educational, academic, scientific or non-commercial purposes;
 
-f. make modifications for permitted non-commercial purposes;
+f. modify the Software for permitted Non-Commercial Uses;
 
-g. create Modified Works for permitted non-commercial purposes;
+g. create Modified Works for permitted Non-Commercial Uses;
 
-h. redistribute unmodified copies of the Software without charge;
+h. reproduce Project Content for permitted educational, academic, scientific or non-commercial purposes, subject to attribution;
 
-i. redistribute Modified Works without charge, provided that all requirements of this licence are satisfied.
+i. redistribute the Software, Project Content or Modified Works without charge, subject to this licence; and
+
+j. publish results, criticism, benchmarks and research arising from permitted use.
 
 These permissions apply only to Non-Commercial Use.
 
-## 4. Absolute Commercial-Use Restriction
+## 4. Education, Academic Research and Demonstration
 
-You may not use, reproduce, modify, distribute, host, provide access to, incorporate, bundle or otherwise exploit the Software or a Modified Work for any Commercial Use without prior written permission from the Copyright Holder.
+The purpose of this section is to permit broad use of the project in genuine education, student development, academic research, scientific communication and public engagement without those activities becoming prohibited merely because they take place within a funded institution.
 
-This prohibition includes, without limitation:
+### 4.1 Permitted Educational and Academic Use
+
+A school, college, university, public research institution, charity, museum, observatory or other educational or research body may use the Covered Material for genuine educational, academic or scientific purposes.
+
+Permitted activities include:
+
+a. classroom and laboratory teaching;
+
+b. lectures, seminars, workshops and tutorials;
+
+c. student exercises, assignments and projects;
+
+d. undergraduate and postgraduate research;
+
+e. dissertations and theses;
+
+f. doctoral research;
+
+g. academic research projects;
+
+h. demonstrations of scientific or technical work;
+
+i. demonstrations at conferences, seminars, research meetings and academic events;
+
+j. university open days and educational outreach;
+
+k. public-engagement and science-communication events;
+
+l. museum, observatory and educational demonstrations;
+
+m. research presentations and posters;
+
+n. academic publications;
+
+o. teaching notes, lecture slides, worksheets and course materials;
+
+p. recorded lectures and educational videos;
+
+q. screenshots, plots, animations, simulation recordings and other Generated Outputs used to explain the Software or the science demonstrated through it;
+
+r. research-group and institutional websites describing or demonstrating genuine academic work;
+
+s. student portfolios and demonstrations of work undertaken during study; and
+
+t. reasonable modification of the Software for any of the above purposes.
+
+### 4.2 Ordinary Institutional Funding Does Not Make Use Commercial
+
+The following do **not**, by themselves, make an otherwise permitted educational or academic use Commercial Use:
+
+a. tuition fees paid to an educational institution;
+
+b. salaries paid to lecturers, teachers, researchers, technicians or other staff;
+
+c. ordinary student fees;
+
+d. public research grants;
+
+e. charitable research grants;
+
+f. research-council funding;
+
+g. scholarships, bursaries and studentships;
+
+h. ordinary institutional funding;
+
+i. payment of conference or event attendance fees;
+
+j. recovery of reasonable costs associated with education, research or an academic event;
+
+k. publication fees or ordinary academic publishing arrangements;
+
+l. institutional promotion of genuine teaching or research activity; or
+
+m. use of a general-purpose commercial hosting, video, repository or communications platform.
+
+Accordingly, a university does not require a commercial licence merely because it charges tuition, employs paid staff, receives research funding, or uses the Software as part of ordinary teaching or academic research.
+
+### 4.3 Demonstrations and Teaching Materials
+
+Covered Material and Generated Outputs may be shown, reproduced and incorporated into genuine educational, academic and scientific materials.
+
+This includes use in lectures and presentations, course materials, academic papers, dissertations and theses, conference presentations, educational websites, recorded teaching, student portfolios, public-engagement activities, research demonstrations and non-commercial scientific communication.
+
+Where reasonably practicable, public material demonstrating the Software itself should acknowledge:
+
+> **Sgr A* Simulator — original software and project by Mark Hurrell. Copyright © 2026 Mark Hurrell.**
+
+Failure to place attribution on every individual plot, screenshot or frame does not by itself constitute a licence violation where appropriate attribution is provided in the surrounding work, credits, acknowledgements or accompanying material.
+
+### 4.4 Recorded and Online Education
+
+Permitted educational activity may be delivered in person or remotely.
+
+The Software and Generated Outputs may therefore be used in live online teaching, university virtual-learning environments, recorded lectures, educational livestreams, publicly accessible academic demonstrations and non-commercial educational videos.
+
+The mere appearance of general advertising inserted by a third-party platform does not make the educator's use Commercial Use where the educator does not receive advertising, sponsorship or other commercial revenue connected with that use.
+
+### 4.5 Student Rights
+
+Students may use, study, modify and demonstrate the Software as part of their education and academic development.
+
+Students may include work created using the Software in coursework, dissertations and theses, portfolios, academic applications, presentations, research demonstrations, job applications and interviews, and demonstrations of their own skills and work.
+
+A student does not breach this licence merely because educational experience gained using the Software later assists that student in obtaining employment or pursuing a career.
+
+### 4.6 Boundary With Commercial Activity
+
+The permissions in this section do not extend to activity whose primary purpose is commercial exploitation.
+
+A separate commercial licence is required where, for example, the Software is used:
+
+a. to provide commercial consultancy;
+
+b. to perform contract research primarily for a commercial client;
+
+c. to develop a commercial product or service;
+
+d. by a university spin-out, trading subsidiary or other commercial company for its business activities;
+
+e. in a paid corporate training product;
+
+f. in commercial professional-development or executive-training services supplied to external customers;
+
+g. to produce proprietary deliverables for a commercial customer;
+
+h. to provide a commercial hosted service;
+
+i. as part of advertising, sponsorship or promotional activity undertaken primarily for commercial gain; or
+
+j. in research whose principal purpose is to provide a specific commercial organisation with proprietary product-development or competitive advantage.
+
+The existence of an industry partner or commercial sponsor does not automatically make an entire academic project prohibited. The relevant question is whether the particular use of the Software is genuinely academic or educational, or is instead being undertaken principally as commercial work for the benefit of that organisation.
+
+### 4.7 Mixed Academic and Commercial Projects
+
+Where a project contains both academic and commercial activities, academic participants may continue to exercise the educational and research permissions granted by this section for genuinely academic portions of the project.
+
+Those permissions do not automatically extend to a commercial partner.
+
+A commercial organisation wishing to receive, operate, modify or commercially exploit the Software or a Modified Work must obtain separate permission where required by this licence.
+
+Publication of academic findings arising from permitted research is not prohibited merely because the research has some relationship with industry, provided that use of the Software itself was not principally undertaken as a commercial service or commercial product-development activity.
+
+## 5. Commercial Use Is Prohibited
+
+Without a separate written licence from the Copyright Holder, You may not use, reproduce, modify, distribute, host, provide access to, incorporate, bundle or otherwise exploit Covered Material or a Modified Work for Commercial Use.
+
+Prohibited Commercial Use includes, without limitation:
 
 a. selling the Software or a Modified Work;
 
-b. charging for access to the Software or a Modified Work;
+b. charging for access to it;
 
-c. including the Software in a paid product, package, subscription or service;
+c. incorporating it into a paid product, service, subscription or package;
 
-d. including the Software in a product or service supported wholly or partly by advertising;
+d. providing it as part of an advertising-supported or sponsorship-supported product or service where You receive or control the commercial benefit;
 
-e. distributing or providing the Software through an advertising-supported website, application or platform where the Software contributes to the monetised offering;
+e. using it to attract users or traffic to a monetised product or service where the Software forms a substantive part of that offering;
 
-f. using the Software to attract users, traffic, customers or subscribers to a monetised service;
+f. distributing it in return for advertising, sponsorship, affiliate or promotional revenue;
 
-g. using the Software in connection with sponsorship, paid promotion, affiliate revenue or other commercial promotional activity;
+g. bundling it with commercial software, products or services;
 
-h. bundling the Software with commercial products or services;
+h. providing it through a paid hosting, cloud, software-as-a-service or remotely accessed service;
 
-i. using the Software as part of a paid hosting service, software-as-a-service service, cloud service or remotely accessible commercial application;
+i. using it to deliver paid consultancy or contract work;
 
-j. using the Software in connection with consultancy, contract work or paid professional services;
+j. using it to produce deliverables as part of commercial work;
 
-k. using the Software to produce a deliverable supplied as part of paid work;
+k. using it for commercial research and development;
 
-l. using the Software for commercial research and development;
+l. using it internally by or on behalf of a for-profit organisation where that use is intended to provide operational, research, development, financial, marketing or competitive benefit;
 
-m. using the Software internally by or for a for-profit business where that use provides or is intended to provide a business, operational, research, development, marketing, financial or competitive benefit;
+m. making it nominally available for no charge while obtaining commercial benefit from its use, availability or inclusion elsewhere;
 
-n. supplying the Software without charge where revenue or commercial benefit is obtained through advertising, sponsorship, subscriptions, associated services, data collection performed for commercial benefit, bundling, promotion or another connected activity;
+n. using it as a substantive component of monetised media, advertising, promotional or sponsored content; or
 
-o. incorporating the Software or a Modified Work into another product whose operation, distribution or availability is commercial in nature.
+o. incorporating it into another revenue-generating product or service.
 
-A price of zero does **not** make an activity non-commercial.
+**A price of zero does not make an activity non-commercial.**
 
-Indirect monetisation is Commercial Use.
+Advertising-supported, sponsorship-supported or otherwise indirectly monetised use may therefore be Commercial Use even when users are not charged to access the Software.
 
-An individual who works for a commercial organisation may still use the Software privately in a purely personal capacity, provided that the use is not undertaken for, on behalf of, using the resources of, or for the benefit of that organisation.
+## 6. General-Purpose Hosting Platforms
 
-## 5. Education and Research
+Use of a general-purpose repository, hosting, communications, publishing or video platform does not, by itself, make Your activity Commercial Use merely because the platform operator is a commercial business, displays general platform advertising, collects ordinary service data, or receives revenue independently of You.
 
-Non-commercial educational institutions, public research bodies, charities and individual researchers may use and modify the Software for genuine non-commercial teaching, study and research.
+For example, otherwise permitted publication of a non-commercial fork through a general-purpose source-code hosting service does not become Commercial Use solely because the hosting provider operates commercially.
 
-Research is not considered permitted Non-Commercial Use where the Software is used:
+Likewise, an educator does not breach this licence merely because a third-party video platform independently places general advertising around a non-monetised educational video.
 
-a. primarily for the commercial benefit of a commercial sponsor;
+This exception does not apply where You receive revenue, commercial benefit, sponsorship or other consideration connected with the Covered Material, or where the Covered Material forms part of a monetised offering under Your control.
 
-b. to satisfy a commercial development contract;
+## 7. Generated Outputs
 
-c. to create proprietary commercial deliverables;
+The Copyright Holder does not claim ownership of a Generated Output solely because it was produced using the Software.
 
-d. to provide exclusive commercial rights, results or advantages to a commercial organisation; or
+Generated Outputs may be used freely for the educational, academic, scientific, student and public-engagement purposes permitted by Section 4.
 
-e. as part of paid commercial research or development.
+This includes use in academic papers, dissertations, theses, teaching materials, presentations, demonstrations, student portfolios, research websites and educational recordings.
 
-Publication of ordinary academic research, papers, results, benchmarks and criticism arising from permitted Non-Commercial Use is permitted.
+Use of the Software to deliberately create Generated Outputs as part of a Commercial Use remains prohibited unless separately authorised.
 
-Normal citation and acknowledgement of the Sgr A* Simulator and its original author are encouraged in academic work.
+For example, separate permission is required where the Software is deliberately used to generate material for a commercial advertising campaign, produce simulation material sold as part of a commercial product, regularly create content for a monetised commercial service, produce material for a paying commercial client, or generate assets as part of commercial product development.
 
-## 6. Modification
+A Generated Output does not become prohibited merely because it later appears in an incidental commercial context that was not contemplated when the permitted academic, educational or personal work was undertaken.
 
-You may modify the Software only for uses permitted by this licence.
+The Copyright Holder does not claim copyright in factual numerical results merely because those results were generated by the Software.
 
-Any Modified Work that You distribute must:
+Where a Generated Output contains copyrightable project artwork, text, interface material or other protected content, rights in those incorporated elements remain unaffected.
 
-a. clearly state that it is a modified version;
+Datasets, reference data, documentation, images or other materials distributed as part of the project may carry separate licence notices. Where they do, those notices govern the identified material.
 
-b. identify the material changes where reasonably practicable;
+## 8. Personal Use by Employees
 
-c. include the date or dates of modification;
+An individual employed by a commercial organisation may use the Software privately for a genuinely personal Non-Commercial Use.
 
-d. not represent those modifications as having been made or approved by the original Copyright Holder unless that is factually true;
+That exception does not apply where the use is undertaken for the employer, performed as part of employment duties, intended to benefit the employer's business, used in a commercial project, or otherwise connected with the employer's commercial activity.
 
-e. preserve the original copyright and attribution notices;
+## 9. Modification
 
-f. include a complete copy of this licence; and
+You may modify the Software for uses permitted by this licence.
 
-g. remain subject to this licence.
+Any Modified Work that You distribute or make available to others must:
 
-You may not remove or obscure notices identifying the original authorship or provenance of the Software.
+a. clearly state that it is a modified version of the Sgr A* Simulator;
 
-## 7. Attribution and Provenance
+b. identify material modifications where reasonably practicable;
 
-Redistribution of the Software or any Modified Work must preserve the following notice:
+c. identify the date or dates of modification;
 
-**Sgr A* Simulator**
-**Original software and project: Copyright © 2026 Mark Hurrell.**
+d. not state or imply that those modifications were made, approved or endorsed by the Copyright Holder unless this is true;
 
-You must not falsely claim authorship of the original Software.
+e. preserve applicable original copyright and provenance notices;
 
-You must not remove, alter or obscure copyright, authorship, provenance or licence notices for the purpose of concealing the origin of the Software.
+f. provide recipients with this licence; and
 
-Modified versions must be represented as modified versions and not as the unmodified original project.
+g. remain subject to this licence in respect of material derived from Covered Material.
 
-You may truthfully state that a Modified Work is derived from, based upon, or forked from the Sgr A* Simulator.
+You must not remove or obscure provenance notices for the purpose of concealing the origin of material derived from Covered Material.
 
-## 8. Distribution of Source
+## 10. Redistribution
 
-If You distribute the Software or a Modified Work in compiled, minified, bundled, transformed or other form from which the preferred source form is not readily available, You must also provide the complete corresponding source code for the portions covered by this licence.
+Whenever You redistribute Covered Material, whether modified or unmodified, You must provide the recipient with:
 
-That source must be provided without additional charge and under this licence.
+a. a copy of this licence or a clear and durable means of obtaining its complete text;
 
-You may not use technical measures or contractual terms intended to prevent recipients from exercising the non-commercial rights granted by this licence.
+b. the applicable copyright notice;
 
-## 9. Modified Works Remain Non-Commercial
+c. the canonical attribution notice specified in Section 11;
 
-A Modified Work containing copyrightable material from the Software remains subject to this licence.
+d. all applicable third-party licence notices; and
 
-You may not relicense such material under terms that permit Commercial Use.
+e. Corresponding Source where required by this licence.
 
-You may not convert the Software or a Modified Work into proprietary commercial software.
+You must not represent a Modified Work as the unmodified official Sgr A* Simulator.
 
-You may not remove the non-commercial restriction from copies or Modified Works that contain material covered by this licence.
+## 11. Canonical Attribution and Provenance
 
-This section does not claim ownership of independently created material that does not copy or derive from copyrightable material in the Software.
+The canonical attribution notice is:
 
-## 10. Project Name and Identity
+> **Sgr A* Simulator — original software and project by Mark Hurrell. Copyright © 2026 Mark Hurrell.**
 
-This licence does not grant permission to use project names, logos, visual identity or branding in a manner that:
+Where reasonably practicable, redistributed versions and public Modified Works must retain this notice.
 
-a. falsely implies endorsement by the Copyright Holder;
+You must not falsely claim authorship of copyrightable material originating in Covered Material.
 
-b. falsely represents a Modified Work as the official version of the Sgr A* Simulator; or
+You must not intentionally remove, alter or obscure copyright, authorship, licence or provenance information in order to create a false impression about the origin of the Software.
 
-c. creates a misleading impression about the origin or authorship of a Modified Work.
+You may truthfully describe a Modified Work as being derived from, based upon, or forked from the Sgr A* Simulator.
 
-Reasonable descriptive references such as “derived from the Sgr A* Simulator” are permitted.
+## 12. Corresponding Source on Distribution
 
-## 11. Commercial Licensing
+If You distribute the Software or a Modified Work in compiled, bundled, minified, transformed or another form from which its preferred source form is not readily available, You must make the Corresponding Source available to the recipient without additional charge.
+
+The Corresponding Source for portions covered by this licence must be provided under this licence.
+
+You may not impose contractual or technical measures whose purpose is to prevent recipients from exercising the Non-Commercial rights granted to them by this licence.
+
+## 13. Remote and Network Use
+
+If You modify material covered by this licence and make that Modified Work available for users to interact with remotely over a computer network, You must provide those users with a clear and reasonably accessible means of obtaining the Corresponding Source for the covered version being operated.
+
+This requirement applies even if no copy of the Modified Work is otherwise distributed to those users.
+
+This section does not authorise Commercial Use. Commercial network or hosted use remains prohibited unless separately licensed in writing.
+
+## 14. Modified Works Remain Non-Commercial
+
+Copyrightable material derived from Covered Material remains subject to this licence.
+
+You may not relicense such derived material on terms that permit Commercial Use.
+
+You may not convert covered material into proprietary commercial software or remove its Non-Commercial restriction.
+
+This section does not claim ownership of independently created code, ideas, algorithms, scientific principles, methods, facts or material that does not copy or derive from copyrightable expression contained in Covered Material.
+
+## 15. Contributions to the Official Project
+
+The Copyright Holder is not required to accept contributions.
+
+A contribution may be incorporated into the official Sgr A* Simulator only where the contributor has accepted the project's Contributor Terms.
+
+Unless a separate written agreement states otherwise, a contributor must grant the Copyright Holder sufficient rights to use, reproduce and modify the contribution; prepare derivative works from it; incorporate it into the Software or Project Content; distribute and publicly make it available; sublicense it; relicense it under this licence or another licence; and license it as part of a separate commercial licence.
+
+Such a grant need not transfer ownership of the contributor's copyright.
+
+The official project should not merge a third-party contribution unless the required Contributor Terms have been accepted and recorded.
+
+Nothing in this section grants the Copyright Holder rights in material merely discussed, reported in an issue, quoted for reference, or linked by a user unless it is intentionally submitted for incorporation into the project.
+
+## 16. Project Name and Identity
+
+This licence does not grant rights to use project names, logos, visual identity or branding in a way that falsely implies endorsement by the Copyright Holder, falsely represents a Modified Work as the official Sgr A* Simulator, or creates a misleading impression about its origin or authorship.
+
+Truthful descriptive statements such as “derived from the Sgr A* Simulator” are permitted.
+
+No exclusive right is claimed in the astronomical designation “Sgr A*” itself.
+
+## 17. Commercial Licensing
 
 No Commercial Use is authorised by this licence.
 
-The Copyright Holder may, entirely at his discretion, grant separate commercial licences under different terms.
+The Copyright Holder may grant separate commercial licences under different terms.
 
-Permission granted under a separate written agreement applies only to the party, purpose and circumstances specified in that agreement.
+A commercial licence applies only to the person or entity, uses and circumstances specified by that agreement.
 
-The existence of this possibility does not create any entitlement to obtain a commercial licence.
+Nothing in this licence creates an entitlement to receive a commercial licence.
 
-## 12. Third-Party Material
+## 18. Third-Party Material
 
-This licence applies only to material for which the Copyright Holder has the legal authority to grant these rights.
+This licence applies only to material that the Copyright Holder has authority to license under these terms.
 
-Third-party libraries, dependencies, assets, code, data or other materials included with the project remain subject to their respective licences and copyright notices.
+Third-party software, libraries, dependencies, assets, data and other materials remain subject to their own copyright and licence terms.
 
-Nothing in this licence replaces, overrides or restricts rights granted by the lawful owners of those third-party materials.
+Nothing in this licence removes, limits or replaces rights granted to recipients under an applicable third-party licence.
 
-## 13. No Transfer of Ownership
+Third-party material must not be represented as being licensed under this licence merely because it is packaged with the Sgr A* Simulator.
 
-The rights granted by this licence are permissions to use copyrighted material under specified conditions.
+Where required, the project distribution must include the applicable third-party licence text, notices, source availability, replacement, relinking or other compliance material required by those licences.
 
-Ownership of the original Software is not transferred to You.
+## 19. Separately Licensed Documentation, Data and Other Material
 
-No provision of this licence transfers copyright, trademark, patent or other intellectual-property ownership to You.
+Project documentation, research datasets, reference datasets, images and other non-software materials may be distributed under separate licence terms identified with those materials.
 
-Except for the permissions expressly granted by this licence, all rights are reserved.
+Where a separate licence notice is present, that licence governs the identified material instead of this licence.
 
-## 14. Statutory Rights
+Absence of a separate licence does not transfer ownership or place material in the public domain.
 
-Nothing in this licence is intended to restrict any use that applicable law permits without the Copyright Holder's permission and that cannot lawfully be restricted by licence.
+## 20. Moral Rights in Qualifying Non-Code Works
 
-## 15. Termination
+To the extent provided by applicable law, Mark Hurrell asserts the right to be identified as the author of original project documentation, original artistic works and other qualifying non-code works created by him.
 
-Your rights under this licence terminate automatically if You materially breach its terms.
+Nothing in this section is intended to assert a moral right where applicable law provides that such a right does not apply.
 
-Following termination, You must cease any activity that depended upon permission granted by this licence.
+## 21. No Transfer of Ownership
 
-Termination does not remove rights or remedies that may have arisen from an earlier infringement or breach.
+The rights granted by this licence are permissions to exercise specified rights under stated conditions.
 
-The Copyright Holder may reinstate permission in writing at his discretion.
+Ownership of the original Covered Material is not transferred to You.
 
-## 16. No Warranty
+Except for rights expressly granted by this licence, all rights are reserved.
 
-To the maximum extent permitted by applicable law, the Software is provided **“as is”** and **“as available”**, without warranties or representations of any kind, whether express, implied or statutory.
+## 22. Statutory Rights
 
-The Software is an experimental scientific and educational project and must not be assumed to be suitable for operational, safety-critical, financial, medical, navigational or other consequential decision-making.
+Nothing in this licence is intended to restrict an exception, limitation or statutory right that applicable law permits You to exercise without the Copyright Holder's permission and that cannot lawfully be restricted by agreement.
 
-No guarantee is made regarding accuracy, completeness, reliability, availability, fitness for a particular purpose or freedom from defects.
+## 23. Violations, Cure and Termination
 
-## 17. Limitation of Liability
+If You materially violate this licence, the rights granted to You may terminate.
 
-To the maximum extent permitted by applicable law, the Copyright Holder and contributors shall not be liable for any loss, damage, cost or claim arising from use of, inability to use, modification of, reliance upon or distribution of the Software.
+For a first violation that is reasonably capable of remedy and is not deliberate commercial exploitation, deliberate false attribution or deliberate concealment of provenance, Your licence will continue if:
+
+a. You receive written notice identifying the violation;
+
+b. You come into full compliance within 30 days of receiving that notice; and
+
+c. You take reasonable steps to correct the effects of the violation.
+
+A repeated violation, deliberate unauthorised Commercial Use, deliberate false claim of authorship, or deliberate removal of provenance for the purpose of misrepresentation may result in immediate termination of rights granted by this licence.
+
+Termination does not remove rights or remedies arising from infringement or breach occurring before termination.
+
+The Copyright Holder may reinstate permission in writing.
+
+## 24. No Warranty
+
+To the maximum extent permitted by applicable law, the Covered Material is provided **“as is”** and **“as available”**, without warranties or representations of any kind, whether express, implied or statutory.
+
+The Software is an experimental scientific and educational project.
+
+It must not be assumed to be suitable for safety-critical, medical, financial, navigational, operational or other consequential decision-making.
+
+No guarantee is made concerning accuracy, completeness, reliability, availability, fitness for a particular purpose or freedom from defects.
+
+## 25. Limitation of Liability
+
+To the maximum extent permitted by applicable law, the Copyright Holder shall not be liable for losses, damages, costs or claims arising from use, inability to use, modification, reliance upon or distribution of Covered Material.
 
 Nothing in this licence excludes liability that applicable law does not permit to be excluded.
 
-## 18. No Implied Permission
+## 26. No Implied Permission or Waiver
 
-Failure by the Copyright Holder to enforce a provision of this licence on one occasion does not waive the right to enforce that provision later.
+Permission must not be inferred from public availability of the source code, failure to charge for access, silence, previous non-enforcement, or permission granted to another person for a different purpose.
 
-Permission must not be inferred from silence, previous non-enforcement, public availability of the source code or the absence of a charge.
+Failure to enforce a provision on one occasion does not by itself waive the right to enforce it subsequently.
 
-Public availability does not place the Software in the public domain.
+Public availability does not place Covered Material in the public domain.
 
-## 19. Severability
+## 27. Severability
 
-If any provision of this licence is held to be invalid or unenforceable, that provision shall be interpreted or limited to the minimum extent necessary while the remaining provisions continue in effect where legally possible.
+If a provision of this licence is held invalid or unenforceable, it shall be limited or interpreted to the minimum extent reasonably necessary, where legally possible, while the remaining provisions continue in effect.
 
-## 20. Governing Law
+## 28. Governing Law
 
-This licence is governed by the laws of England and Wales, subject to any mandatory rules of applicable law that cannot lawfully be excluded.
+This licence is governed by the laws of England and Wales, subject to mandatory rules that cannot lawfully be excluded.
 
-Any dispute concerning rights granted under this licence shall be subject to the jurisdiction of the courts of England and Wales, except where applicable law requires otherwise.
+Disputes concerning rights granted under this licence are subject to the jurisdiction of the courts of England and Wales except where applicable law requires otherwise.
 
-## 21. Acceptance
+## 29. Acceptance
 
-By exercising any permission granted under this licence, You accept and agree to comply with its terms.
+By exercising a permission that would otherwise require authorisation from the Copyright Holder and that is granted by this licence, You accept its conditions.
 
-If You do not agree to these terms, this licence grants You no permission to copy, modify, distribute or otherwise exercise rights reserved to the Copyright Holder.
+If You do not accept those conditions, this licence grants You no permission to exercise rights reserved to the Copyright Holder.
 
 ---
 
-**Required Copyright Notice**
+## Required Copyright and Attribution Notice
 
-Copyright © 2026 Mark Hurrell. All rights reserved except as expressly granted under the Sgr A* Non-Commercial Source Licence v1.0.
+> **Sgr A* Simulator — original software and project by Mark Hurrell. Copyright © 2026 Mark Hurrell.**
 
-**Required Attribution**
+## Licence Name
 
-Sgr A* Simulator — original software and project by Mark Hurrell.
-
-**Licence identifier**
-
-Sgr A* Non-Commercial Source Licence v1.0
+**Sgr A* Non-Commercial Source Licence v1.0**
