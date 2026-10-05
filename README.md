@@ -1,11 +1,27 @@
 # Sgr A* Simulator
 
+**Live demo:** [Launch the simulator](https://mark-hurrell.github.io/sgra-simulator/sgra_sim.html)
+
+Runs in the browser—nothing to install.
+
 Sgr A* is an experimental browser-based scientific prototype for exploring
 stellar motion around a galactic-centre black hole, validated within its tested
 domain. It is intentionally a research and visualisation tool, not a production
-astronomy package.
+astronomy package. 
 
 Author: Mark Hurrell.
+
+## About the project
+
+The simulator was built with AI assistance under a formal assurance process:
+separate review lenses, gate tests, hashed artefacts and an explicit record of
+what the evidence does and does not cover. The method, including the mistakes
+and negative results that shaped it, is written up in
+*When Green Tests Aren't Enough* (see Further reading).
+
+**Where to start:** try the live demo, then read *When Green Tests Aren't
+Enough* for the engineering method, or *Design in Hindsight: V1* for what the
+prototype taught and the questions it poses for V2.
 
 ## What it demonstrates
 
@@ -15,15 +31,15 @@ scenarios, an accessible structured object list, keyboard/mobile camera
 controls, and optional supplementary sonification. Group Follow is a chase
 camera for a selected group of intruders.
 
+When a body is selected and followed, the faint line behind it shows its recent
+trail. While preparing an intruder launch, the orange line shows the proposed
+trajectory from the current launch inputs.
+
 ## Run locally
 
 Serve the repository root with any static HTTP server and open `sgra_sim.html`.
 For example: `python3 -m http.server 8000`, then visit
 `http://127.0.0.1:8000/sgra_sim.html`.
-
-When a body is selected and followed, the faint line behind it shows its recent
-trail. While preparing an intruder launch, the orange line shows the proposed
-trajectory from the current launch inputs.
 
 ## Validation
 
@@ -53,16 +69,17 @@ audit and scenario catalogue documents.
 
 ## Further reading
 
+- *When Green Tests Aren't Enough* — engineering and assurance lessons from an
+  AI-assisted software system. [PDF](When_Green_Tests_Aren_t_Enough.pdf) ·
+  [Markdown](docs/papers/When_Green_Tests_Arent_Enough.md)
 - [Design in Hindsight: V1](docs/DESIGN_IN_HINDSIGHT_V1.md) — what the V1
   prototype taught us, and the questions it poses for V2.
 - *Building SGR A\** — engineering a scientific simulator in an unfamiliar
   domain. [PDF](Building_SGRA.pdf) · [Markdown](docs/papers/Building_SGRA_source.md)
 - *Numerical Evidence in Scientific Software* — numerical assurance and
-  evidence practices for scientific software. [PDF](NUMERICAL_EVIDENCE_FINAL.pdf)
-  · [Markdown](docs/papers/NUMERICAL_EVIDENCE_FINAL.md)
-- *When Green Tests Aren't Enough* — engineering and assurance lessons from an
-  AI-assisted software system. [PDF](When_Green_Tests_Aren_t_Enough.pdf) ·
-  [Markdown](docs/papers/When_Green_Tests_Arent_Enough.md)
+  evidence practices for scientific software. [PDF](NUMERICAL_EVIDENCE_FINAL.pdf) ·
+  [Markdown](docs/papers/NUMERICAL_EVIDENCE_FINAL.md)
+
 
 ## Accessibility and licence
 
