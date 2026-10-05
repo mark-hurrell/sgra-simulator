@@ -2,7 +2,8 @@
 
 **Live demo:** [Launch the simulator](https://mark-hurrell.github.io/sgra-simulator/sgra_sim.html)
 
-Runs in the browser—nothing to install.
+Runs in the browser—nothing to install. Best experienced on desktop; mobile touch 
+controls are still being refined.
 
 Sgr A* is an experimental browser-based scientific prototype for exploring
 stellar motion around a galactic-centre black hole, validated within its tested
