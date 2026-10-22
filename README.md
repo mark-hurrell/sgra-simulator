@@ -70,6 +70,7 @@ audit and scenario catalogue documents.
 
 ## Further reading
 
+- *Good Engineering First: Directing AI to Design, Question, Review and Improve* — an engineering position paper on using AI for design, architectural challenge, technical debt investigation and improvement. [Read the paper](docs/papers/Good_Engineering_First.md)
 - *When Green Tests Aren't Enough* — engineering and assurance lessons from an
   AI-assisted software system. [PDF](When_Green_Tests_Aren_t_Enough.pdf) ·
   [Markdown](docs/papers/When_Green_Tests_Arent_Enough.md)
