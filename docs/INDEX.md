@@ -8,6 +8,7 @@
 - [Numerical Evidence in Scientific Software PDF](../NUMERICAL_EVIDENCE_FINAL.pdf) and [Markdown edition](papers/NUMERICAL_EVIDENCE_FINAL.md).
 - [When Green Tests Aren't Enough PDF](../When_Green_Tests_Aren_t_Enough.pdf) and [Markdown edition](papers/When_Green_Tests_Arent_Enough.md).
 - [Good Engineering First](papers/Good_Engineering_First.md) — an engineering position paper on directing AI beyond code generation.
+- [When Software Becomes Easier to Build, What Should We Build?](papers/When_Software_Becomes_Easier_to_Build_What_Should_We_Build.md) — collaborative discovery, business processes and requirements in AI-assisted engineering.
 - [Publication scenario catalogue](../evidence/publication/V1_PUBLICATION_SCENARIO_CATALOGUE_2026-09-21.json) — public scenario definitions and provenance.
 - [Release build metadata](../RELEASE_BUILD_METADATA.json) — the generated package's source-state and manifest reference.
 
